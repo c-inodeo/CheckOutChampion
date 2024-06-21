@@ -1,4 +1,4 @@
-using CheckOutChampionWeb.Models;
+using CheckOutChampion.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace CheckOutChampionWeb.Migrations
+namespace CheckOutChampion.DataAccess.Migrations
 {
     /// <inheritdoc />
     public partial class AddCategoryToDb : Migration

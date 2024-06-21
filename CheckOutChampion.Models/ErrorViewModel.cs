@@ -1,4 +1,4 @@
-namespace CheckOutChampionWeb.Models
+namespace CheckOutChampion.Models
 {
     public class ErrorViewModel
     {

@@ -1,4 +1,4 @@
-using CheckOutChampionWeb.Data;
+using CheckOutChampion.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

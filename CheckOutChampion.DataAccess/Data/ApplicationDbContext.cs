@@ -1,7 +1,7 @@
-﻿using CheckOutChampionWeb.Models;
+﻿using CheckOutChampion.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace CheckOutChampionWeb.Data
+namespace CheckOutChampion.DataAccess.Data
 {
     public class ApplicationDbContext : DbContext
     {

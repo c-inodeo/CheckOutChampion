@@ -1,5 +1,5 @@
-﻿using CheckOutChampionWeb.Data;
-using CheckOutChampionWeb.Models;
+﻿using CheckOutChampion.DataAccess.Data;
+using CheckOutChampion.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CheckOutChampionWeb.Controllers
@@ -31,6 +31,7 @@ namespace CheckOutChampionWeb.Controllers
             {
                 _context.Categories.Add(obj);
                 _context.SaveChanges();
+                TempData["success"] = "Category created successfully!";
                 return RedirectToAction("Index");
             }
             return View();
@@ -62,6 +63,7 @@ namespace CheckOutChampionWeb.Controllers
             {
                 _context.Categories.Update(obj);
                 _context.SaveChanges();
+                TempData["success"] = "Category edited successfully!";
                 return RedirectToAction("Index");
             }
             return View();
@@ -73,8 +75,6 @@ namespace CheckOutChampionWeb.Controllers
                 return NotFound();
             }
             Category? categoryFromDb = _context.Categories.Find(id);
-            //Category? categoryFromDb1 = _context.Categories.FirstOrDefault(u => u.Id ==id);
-            //Category? categoryFromDb2 = _context.Categories.Where(u=> u.Id == id).FirstOrDefault();
 
             if (categoryFromDb == null)
             {
@@ -92,6 +92,7 @@ namespace CheckOutChampionWeb.Controllers
             }
             _context.Categories.Remove(obj);
             _context.SaveChanges();
+            TempData["success"] = "Category deleted successfully!";
             return RedirectToAction("Index");
         }
     }

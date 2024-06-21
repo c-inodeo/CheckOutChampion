@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace CheckOutChampionWeb.Models
+namespace CheckOutChampion.Models
 {
     public class Category
     {
