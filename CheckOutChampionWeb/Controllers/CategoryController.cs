@@ -1,4 +1,5 @@
 ﻿using CheckOutChampion.DataAccess.Data;
+using CheckOutChampion.DataAccess.Repository.IRepository;
 using CheckOutChampion.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,14 +7,14 @@ namespace CheckOutChampionWeb.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        public CategoryController(ApplicationDbContext context)
+        private readonly ICategory _categoryRepository;
+        public CategoryController(ICategory context)
         {
-           _context = context;
+            _categoryRepository = context;
         }
         public IActionResult Index()
         {
-            List<Category> categories = _context.Categories.ToList();
+            List<Category> categories = _categoryRepository.GetAll().ToList();
             return View(categories);
         }
         public IActionResult Create()
@@ -29,8 +30,8 @@ namespace CheckOutChampionWeb.Controllers
             }
             if (ModelState.IsValid) 
             {
-                _context.Categories.Add(obj);
-                _context.SaveChanges();
+                _categoryRepository.Add(obj);
+                _categoryRepository.Save();
                 TempData["success"] = "Category created successfully!";
                 return RedirectToAction("Index");
             }
@@ -42,7 +43,7 @@ namespace CheckOutChampionWeb.Controllers
             {
                 return NotFound();
             }
-            Category? categoryFromDb = _context.Categories.Find(id);
+            Category? categoryFromDb = _categoryRepository.Get(u => u.Id == id);
             //Category? categoryFromDb1 = _context.Categories.FirstOrDefault(u => u.Id ==id);
             //Category? categoryFromDb2 = _context.Categories.Where(u=> u.Id == id).FirstOrDefault();
 
@@ -61,8 +62,8 @@ namespace CheckOutChampionWeb.Controllers
             }
             if (ModelState.IsValid)
             {
-                _context.Categories.Update(obj);
-                _context.SaveChanges();
+                _categoryRepository.Update(obj);
+                _categoryRepository.Save();
                 TempData["success"] = "Category edited successfully!";
                 return RedirectToAction("Index");
             }
@@ -74,7 +75,7 @@ namespace CheckOutChampionWeb.Controllers
             {
                 return NotFound();
             }
-            Category? categoryFromDb = _context.Categories.Find(id);
+            Category? categoryFromDb = _categoryRepository.Get(u => u.Id == id);
 
             if (categoryFromDb == null)
             {
@@ -85,13 +86,13 @@ namespace CheckOutChampionWeb.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
-            Category obj = _context.Categories.Find(id);
+            Category obj = _categoryRepository.Get(u => u.Id == id);
             if (obj == null) 
             {
                 return NotFound();
             }
-            _context.Categories.Remove(obj);
-            _context.SaveChanges();
+            _categoryRepository.Remove(obj);
+            _categoryRepository.Save();
             TempData["success"] = "Category deleted successfully!";
             return RedirectToAction("Index");
         }
