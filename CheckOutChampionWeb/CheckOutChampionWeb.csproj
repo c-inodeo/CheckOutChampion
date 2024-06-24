@@ -22,8 +22,4 @@
     <ProjectReference Include="..\CheckOutChampion.Utility\CheckOutChampion.Utility.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>

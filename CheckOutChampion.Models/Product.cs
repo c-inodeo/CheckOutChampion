@@ -5,6 +5,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace CheckOutChampion.Models
 {
@@ -20,5 +22,10 @@ namespace CheckOutChampion.Models
         public string? Description { get; set; }
         [Required]
         public double Price { get; set; }
+        public int CategoryId { get; set; }
+        [ForeignKey("CategoryId")]
+        [ValidateNever]
+        public Category CategoryNav { get; set; }
+        public string? ImageUrl { get; set; }
     }
 }
