@@ -13,12 +13,17 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CheckOutChampion.DataAccess\CheckOutChampion.DataAccess.csproj" />
     <ProjectReference Include="..\CheckOutChampion.Models\CheckOutChampion.Models.csproj" />
     <ProjectReference Include="..\CheckOutChampion.Utility\CheckOutChampion.Utility.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>

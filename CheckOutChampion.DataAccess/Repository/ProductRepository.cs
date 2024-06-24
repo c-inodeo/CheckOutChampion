@@ -10,17 +10,17 @@ using CheckOutChampion.Models;
 
 namespace CheckOutChampion.DataAccess.Repository
 {
-    public class CategoryRepository : Repository<Category>, ICategoryRepository
+    public class ProductRepository : Repository<Product>, IProductRepository
     {
         private readonly ApplicationDbContext _context;
-        public CategoryRepository(ApplicationDbContext context) : base(context)
+        public ProductRepository(ApplicationDbContext context) : base(context)
         {
             _context = context;
         }
 
-        public void Update(Category obj)
+        public void Update(Product obj)
         {
-            _context.Categories.Update(obj);
+            _context.Products.Update(obj);
         }
     }
 }

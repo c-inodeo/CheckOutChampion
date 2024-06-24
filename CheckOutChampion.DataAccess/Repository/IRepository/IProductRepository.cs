@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace CheckOutChampion.DataAccess.Repository.IRepository
 {
-    public interface ICategory :IRepository<Category>
+    public interface IProductRepository :IRepository<Product>
     {
-        void Update(Category obj);
-        void Save();
+        void Update(Product obj);
     }
 }
