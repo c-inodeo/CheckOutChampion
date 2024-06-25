@@ -20,3 +20,31 @@ html {
 body {
   margin-bottom: 60px;
 }
+#tblData {
+    font-size: 16px;
+}
+
+.dt-search, .dt-input {
+   
+    color: white !important;
+}
+.dt-input {
+    border: 1px solid #fff !important;
+}
+#tblData_wrapper > div:nth-child(1) > div.dt-layout-cell.dt-start > div > label {
+    color: white;
+    padding-left: 10px;
+}
+.dt-paging.paging_full_numbers, button.dt-paging-button.disabled.first, #tblData_wrapper > div:nth-child(3) > div.dt-layout-cell.dt-end > div > button.dt-paging-button.disabled.previous, #tblData_wrapper > div:nth-child(3) > div.dt-layout-cell.dt-end > div > button.dt-paging-button.disabled.first {
+    color: white !important;
+}
+#dt-length-0 > option {
+    color: black;
+}
+#tblData tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#tblData tbody tr:hover {
+    background-color: #ddd;
+}
