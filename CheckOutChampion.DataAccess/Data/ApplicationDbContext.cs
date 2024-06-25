@@ -33,7 +33,7 @@ namespace CheckOutChampion.DataAccess.Data
                     Description = "High-performance car wax for a long-lasting shine.",
                     Price = 19.99,
                     CategoryId = 1,
-                    ImageUrl =""
+                    ImageUrl = ""
                 },
                 new Product
                 {

@@ -26,6 +26,7 @@ namespace CheckOutChampion.Models
         [ForeignKey("CategoryId")]
         [ValidateNever]
         public Category CategoryNav { get; set; }
-        public string? ImageUrl { get; set; }
+        [ValidateNever]
+        public string ImageUrl { get; set; }
     }
 }

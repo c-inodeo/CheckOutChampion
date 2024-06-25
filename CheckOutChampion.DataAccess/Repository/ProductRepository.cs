@@ -20,7 +20,17 @@ namespace CheckOutChampion.DataAccess.Repository
 
         public void Update(Product obj)
         {
-            _context.Products.Update(obj);
+            var objFromDb = _context.Products.FirstOrDefault(u => u.Id == obj.Id);
+            if (objFromDb != null)
+            {
+                objFromDb.ProductName = obj.ProductName;
+                objFromDb.Description = obj.Description;
+                objFromDb.Price = obj.Price;
+                if (obj.ImageUrl != null)
+                {
+                    objFromDb.ImageUrl = obj.ImageUrl;
+                }
+            }
         }
     }
 }
