@@ -48,3 +48,6 @@ body {
 #tblData tbody tr:hover {
     background-color: #ddd;
 }
+.card {
+    height: 480px;
+}
