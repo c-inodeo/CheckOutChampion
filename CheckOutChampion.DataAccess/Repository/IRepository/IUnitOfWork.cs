@@ -10,6 +10,7 @@ namespace CheckOutChampion.DataAccess.Repository.IRepository
     {
         ICategoryRepository Category { get; }
         IProductRepository Product { get; }
+        ICartRepository Cart { get; }
         void Save();
     }
 }
