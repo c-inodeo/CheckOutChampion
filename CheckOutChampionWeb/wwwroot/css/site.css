@@ -48,6 +48,6 @@ body {
 #tblData tbody tr:hover {
     background-color: #ddd;
 }
-.card {
+.override-card {
     height: 480px;
 }

@@ -21,7 +21,11 @@ namespace CheckOutChampionWeb.Areas.Customer.Controllers
             IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "CategoryNav");
             return View(productList);
         }
-
+        public IActionResult Details(int? id)
+        {
+            Product product = _unitOfWork.Product.Get(u => u.Id == id, includeProperties: "CategoryNav");
+            return View(product);
+        }
         public IActionResult Privacy()
         {
             return View();
