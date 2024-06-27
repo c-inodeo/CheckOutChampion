@@ -11,5 +11,6 @@ namespace CheckOutChampion.DataAccess.Repository.IRepository
     {
         IEnumerable<Cart> GetAllCartsByUserId(string userId);
         void AddToCart(Cart cart);
+        void Update(Cart cartItem);
     }
 }

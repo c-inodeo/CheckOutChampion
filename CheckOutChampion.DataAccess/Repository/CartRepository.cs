@@ -38,5 +38,16 @@ namespace CheckOutChampion.DataAccess.Repository
 
             _context.SaveChanges();
         }
+
+        public void Update(Cart cartItem)
+        {
+            var objFromDb = _context.CartItems.FirstOrDefault(u => u.CartId == cartItem.CartId);
+            if (objFromDb != null)
+            {
+                objFromDb.Quantity = cartItem.Quantity;
+                objFromDb.DateAdded = cartItem.DateAdded;
+                _context.CartItems.Update(objFromDb);
+            }
+        }
     }
 }

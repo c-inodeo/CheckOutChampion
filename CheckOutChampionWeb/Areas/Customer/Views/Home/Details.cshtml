@@ -54,10 +54,13 @@
                         </div>
                         <div class="row">
                             <div class="col-12 col-md-6 pb-1">
-                                <button type="submit" disabled
-                                        class="btn btn-primary bg-gradient  w-100 py-2 text-uppercase fw-semibold">
-                                    Add to Cart
-                                </button>
+                                <form id="details-form" asp-controller="Cart" asp-action="AddToCart" method="post">
+                                    <input type="hidden" name="productId" value="@Model.Id" />
+                                    <input type="hidden" name="quantity" value="@Model." />
+                                    <button type="submit" class="btn btn-primary bg-gradient border-0 form-control">
+                                        Add to Cart 
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
