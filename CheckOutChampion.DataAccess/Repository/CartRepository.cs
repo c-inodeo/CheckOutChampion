@@ -1,24 +1,41 @@
 ﻿using CheckOutChampion.DataAccess.Data;
 using CheckOutChampion.DataAccess.Repository.IRepository;
 using CheckOutChampion.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 namespace CheckOutChampion.DataAccess.Repository
 {
     public class CartRepository : Repository<Cart>, ICartRepository
     {
         private readonly ApplicationDbContext _context;
+
         public CartRepository(ApplicationDbContext context) : base(context)
         {
             _context = context;
         }
-        public IEnumerable<Cart> GetAllCartsByUserId(string userId)
+
+        public IEnumerable<Cart> GetAll(Expression<Func<Cart, bool>>? filter = null, string? includeProperties = null)
         {
-            return _context.CartItems.Where(c => c.UserId == userId).ToList();
+            IQueryable<Cart> query = _context.CartItems;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProperty);
+                }
+            }
+
+            return query.ToList();
         }
 
         public void AddToCart(Cart cart)

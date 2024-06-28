@@ -1,1 +1,50 @@
-﻿<h1>You are in Cart</h1>
+﻿@model List<Cart>
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient m-lg-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2"> CheckOutChampion | Shopping Cartt</h2>
+            </div>
+            <div class="card-body p-4">
+@*                 <div class="row pb-3">
+                    <div class="col-6">
+                    </div>
+                    <div class="col-6 text-end">
+                        <a asp-controller="Product" asp-action="Upsert" class="btn btn-success">
+                            <i class="bi bi-plus-circle"></i> Create New Product
+                        </a>
+                    </div>
+                </div> *@
+                <table id="tblData" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th> Image</th>
+                            <th> Product Name</th>
+                            <th> Price</th>
+                            <th> Quantity</th>
+                        </tr>
+                    </thead>
+                        <tbody>
+                            @foreach (var cartItem in Model)
+                            {
+                                if (User.Identity.IsAuthenticated)
+                                {
+                                    var currentUserId = User.Identity.Name;
+                                    if (cartItem.UserId == currentUserId)
+                                    {
+                                    <tr>
+                                        <td><img src="@cartItem.Product.ImageUrl" /></td>
+                                        <td>@cartItem.Product.ProductName</td>
+                                        <td>@cartItem.Product.Price</td>
+                                        <td>@cartItem.Quantity</td>
+                                    </tr>
+                                    }
+                                   
+                                }                   
+                            }
+                        </tbody>                                               
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

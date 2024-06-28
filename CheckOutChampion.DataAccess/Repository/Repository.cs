@@ -20,6 +20,7 @@ namespace CheckOutChampion.DataAccess.Repository
             _context = context;
             this.dbSet = _context.Set<T>();
             _context.Products.Include(u => u.CategoryNav).Include(u => u.CategoryId);
+            _context.CartItems.Include(u => u.Product).Include(u => u.ProductId);
         }
         public void Add(T entity)
         {
