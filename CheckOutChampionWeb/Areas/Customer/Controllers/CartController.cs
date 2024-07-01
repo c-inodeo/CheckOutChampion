@@ -24,7 +24,7 @@ namespace CheckOutChampionWeb.Areas.Customer.Controllers
             return View(cartItems);
         }
 
-        public IActionResult AddToCart(int productId, int quantity)
+        public IActionResult AddToCart(int productId, int quantity, bool isIncrement)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var cartItem = _unitOfWork.Cart.Get(c => c.UserId == userId && c.ProductId == productId, includeProperties: "Product");
@@ -45,7 +45,15 @@ namespace CheckOutChampionWeb.Areas.Customer.Controllers
                 }
                 else
                 {
-                    cartItem.Quantity += quantity;
+                    if (isIncrement)
+                    {
+                        cartItem.Quantity += quantity;
+                    }
+                    else
+                    {
+                        cartItem.Quantity = quantity;
+                    }
+
                     _unitOfWork.Cart.Update(cartItem);
                 }
 
@@ -53,12 +61,13 @@ namespace CheckOutChampionWeb.Areas.Customer.Controllers
 
                 // Get the updated list of cart items for the current user
                 var cartItems = _unitOfWork.Cart.GetAll(c => c.UserId == userId, includeProperties: "Product").ToList();
-                return View("AddToCart", cartItems);
+                return View("Index", cartItems);
             }
             else
             {
                 return RedirectToAction("Login", "Account", new { area = "Identity" });
             }
         }
+
     }
 }

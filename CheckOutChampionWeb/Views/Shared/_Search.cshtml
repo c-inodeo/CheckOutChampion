@@ -1,0 +1,8 @@
+﻿<form class="d-flex" asp-controller="Home" asp-action="Index" method="get">
+@*     <input type="text" name="searchString" class="form-control me-sm-2" placeholder="Search for products..." value="@ViewData["CurrentFilter"]" />
+    <button type="submit" class="btn btn-secondary my-2 my-sm-0">Search</button> *@
+    <div class="input-group">
+        <input type="text" name="searchString" class="form-control" placeholder="Search for products..." aria-label="Search for products..." aria-describedby="button-addon2" value="@ViewData["CurrentFilter"]">
+        <button class="btn btn-warning" type="submit" id="button-addon2">Search</button>
+    </div>
+</form>

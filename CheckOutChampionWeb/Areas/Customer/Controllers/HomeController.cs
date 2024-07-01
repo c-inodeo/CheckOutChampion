@@ -16,9 +16,15 @@ namespace CheckOutChampionWeb.Areas.Customer.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string? searchString)
         {
             IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "CategoryNav");
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                productList.Where(p => p.ProductName.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+                    p.CategoryNav.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)
+                );
+            }
             return View(productList);
         }
         public IActionResult Details(int? id)
