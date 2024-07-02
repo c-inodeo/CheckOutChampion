@@ -22,7 +22,7 @@ namespace CheckOutChampionWeb.Areas.Customer.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var cartItems = _unitOfWork.Cart.GetAll(c => c.UserId == userId, includeProperties: "Product").ToList();
-
+            ViewBag.TotalPrice = GetTotalPrice();
             return View(cartItems);
         }
         [HttpPost]
@@ -73,17 +73,20 @@ namespace CheckOutChampionWeb.Areas.Customer.Controllers
                 return RedirectToAction("Login", "Account", new { area = "Identity" });
             }
         }
-        [HttpPost]
         public IActionResult RemoveToCart(int cartId)
         {
             var itemToBeDeleted = _unitOfWork.Cart.Get(u=> u.CartId ==  cartId);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             if (itemToBeDeleted != null)
             {
                 _unitOfWork.Cart.Remove(itemToBeDeleted);
                 _unitOfWork.Save();
                 TempData["success"] = "Item deleted successfully!";
-                return RedirectToAction();
+                var cartItems = _unitOfWork.Cart.GetAll(c => c.UserId == userId, includeProperties: "Product").ToList();
+                
+                ViewBag.TotalPrice = GetTotalPrice();
+                return View("Index", cartItems);
             }
             else 
             {
