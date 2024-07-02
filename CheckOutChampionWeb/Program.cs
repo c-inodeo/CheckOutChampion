@@ -1,10 +1,13 @@
 using CheckOutChampion.DataAccess.Data;
 using CheckOutChampion.DataAccess.Repository;
 using CheckOutChampion.DataAccess.Repository.IRepository;
+using CheckOutChampion.Services;
+using CheckOutChampion.Services.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using CheckOutChampion.Utility;
 using Microsoft.AspNetCore.Identity.UI.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +25,7 @@ builder.Services.ConfigureApplicationCookie(options => {
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();    
+builder.Services.AddScoped<ICartService, CartService>();    
 
 var app = builder.Build();
 

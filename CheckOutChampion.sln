@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckOutChampionWeb", "CheckOutChampionWeb\CheckOutChampionWeb.csproj", "{8FB853CF-5A3E-4CD0-8830-422D38E45D92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CheckOutChampionWeb", "CheckOutChampionWeb\CheckOutChampionWeb.csproj", "{8FB853CF-5A3E-4CD0-8830-422D38E45D92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckOutChampion.DataAccess", "CheckOutChampion.DataAccess\CheckOutChampion.DataAccess.csproj", "{BEC38BCA-FD7C-44FD-BF5B-089336CFB3C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CheckOutChampion.DataAccess", "CheckOutChampion.DataAccess\CheckOutChampion.DataAccess.csproj", "{BEC38BCA-FD7C-44FD-BF5B-089336CFB3C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckOutChampion.Models", "CheckOutChampion.Models\CheckOutChampion.Models.csproj", "{C4528C07-4644-4F76-AA4E-CE5BD7A3163B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CheckOutChampion.Models", "CheckOutChampion.Models\CheckOutChampion.Models.csproj", "{C4528C07-4644-4F76-AA4E-CE5BD7A3163B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckOutChampion.Utility", "CheckOutChampion.Utility\CheckOutChampion.Utility.csproj", "{38AAC3CF-5B65-4B9A-A680-845A21130BDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CheckOutChampion.Utility", "CheckOutChampion.Utility\CheckOutChampion.Utility.csproj", "{38AAC3CF-5B65-4B9A-A680-845A21130BDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckOutChampion.Services", "Services\CheckOutChampion.Services.csproj", "{BD867646-AC38-4623-9916-28195577EE2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{38AAC3CF-5B65-4B9A-A680-845A21130BDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38AAC3CF-5B65-4B9A-A680-845A21130BDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38AAC3CF-5B65-4B9A-A680-845A21130BDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD867646-AC38-4623-9916-28195577EE2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD867646-AC38-4623-9916-28195577EE2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD867646-AC38-4623-9916-28195577EE2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD867646-AC38-4623-9916-28195577EE2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
