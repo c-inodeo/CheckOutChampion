@@ -1,6 +1,7 @@
 ﻿using CheckOutChampion.DataAccess.Data;
 using CheckOutChampion.DataAccess.Repository.IRepository;
 using CheckOutChampion.Models;
+using CheckOutChampion.Services.Interface;
 using CheckOutChampion.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,14 +12,14 @@ namespace CheckOutChampionWeb.Areas.Admin.Controllers
     [Authorize(Roles = StaticData.Role_Admin)]
     public class CategoryController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
-        public CategoryController(IUnitOfWork unitOfWork)
+        private readonly ICategoryService _categoryService;
+        public CategoryController(ICategoryService categoryService)
         {
-            _unitOfWork = unitOfWork;
+            _categoryService = categoryService;
         }
         public IActionResult Index()
         {
-            List<Category> categories = _unitOfWork.Category.GetAll().ToList();
+            List<Category> categories = _categoryService.GetCategories();
             return View(categories);
         }
         public IActionResult Create()
@@ -34,8 +35,7 @@ namespace CheckOutChampionWeb.Areas.Admin.Controllers
             }
             if (ModelState.IsValid)
             {
-                _unitOfWork.Category.Add(obj);
-                _unitOfWork.Save();
+                _categoryService.AddCategory(obj);
                 TempData["success"] = "Category created successfully!";
                 return RedirectToAction("Index");
             }
@@ -47,9 +47,7 @@ namespace CheckOutChampionWeb.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            Category? categoryFromDb = _unitOfWork.Category.Get(u => u.Id == id);
-            //Category? categoryFromDb1 = _context.Categories.FirstOrDefault(u => u.Id ==id);
-            //Category? categoryFromDb2 = _context.Categories.Where(u=> u.Id == id).FirstOrDefault();
+            Category? categoryFromDb = _categoryService.GetCategoryById(id.Value);
 
             if (categoryFromDb == null)
             {
@@ -66,8 +64,7 @@ namespace CheckOutChampionWeb.Areas.Admin.Controllers
             }
             if (ModelState.IsValid)
             {
-                _unitOfWork.Category.Update(obj);
-                _unitOfWork.Save();
+                _categoryService.UpdateCategory(obj);
                 TempData["success"] = "Category edited successfully!";
                 return RedirectToAction("Index");
             }
@@ -79,7 +76,7 @@ namespace CheckOutChampionWeb.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            Category? categoryFromDb = _unitOfWork.Category.Get(u => u.Id == id);
+            Category? categoryFromDb = _categoryService.GetCategoryById(id.Value);
 
             if (categoryFromDb == null)
             {
@@ -90,13 +87,11 @@ namespace CheckOutChampionWeb.Areas.Admin.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
-            Category obj = _unitOfWork.Category.Get(u => u.Id == id);
-            if (obj == null)
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
-            _unitOfWork.Category.Remove(obj);
-            _unitOfWork.Save();
+            _categoryService.DeleteCategory(id.Value);
             TempData["success"] = "Category deleted successfully!";
             return RedirectToAction("Index");
         }
