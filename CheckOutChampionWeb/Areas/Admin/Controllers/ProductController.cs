@@ -19,9 +19,10 @@ namespace CheckOutChampionWeb.Areas.Admin.Controllers
         {
             _productService = productService;
         }
-        public IActionResult Index()
+        public IActionResult Index(string? searchString)
         {
             List<Product> categories = _productService.GetAllProducts();
+            ViewData["CurrentFilter"] = searchString;
             return View(categories);
         }
         public IActionResult Upsert(int? id)
