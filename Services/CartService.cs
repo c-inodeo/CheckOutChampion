@@ -6,6 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using System.Text.Json;
+using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace CheckOutChampion.Services
 {
@@ -66,5 +70,15 @@ namespace CheckOutChampion.Services
                 _unitOfWork.Save();
             }
         }
+        public void SaveCartToSession(string userId, List<Cart> cartItems, ISession session)
+        {
+            session.SetString($"Cart_{userId}", JsonSerializer.Serialize(cartItems));
+        }
+        public List<Cart> LoadCartFromSession(string userId, ISession session)
+        {
+            var value = session.GetString(userId);
+            return value == null ? default(List<Cart>) : JsonConvert.DeserializeObject<List<Cart>>(value);
+        }
+
     }
 }

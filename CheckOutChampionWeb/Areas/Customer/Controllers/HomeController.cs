@@ -33,6 +33,7 @@ namespace CheckOutChampionWeb.Areas.Customer.Controllers
 
             var truncateProductName = productList.Select(c => new Product
             {
+                Id = c.Id,
                 ProductName = _productService.TruncateText(c.ProductName, 15),
                 CategoryNav = new Category { Name = _productService.TruncateText(c.CategoryNav.Name, 15) },
                 Price = c.Price,
@@ -40,7 +41,7 @@ namespace CheckOutChampionWeb.Areas.Customer.Controllers
                 ImageUrl = c.ImageUrl
             });
 
-            return View(productList);
+            return View(truncateProductName);
         }
         public IActionResult Details(int? id)
         {
