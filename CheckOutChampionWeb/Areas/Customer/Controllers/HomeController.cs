@@ -10,44 +10,31 @@ namespace CheckOutChampionWeb.Areas.Customer.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IProductService _productService;
-        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork, IProductService productService)
+        private readonly IHomeService _homeService;
+        public HomeController(ILogger<HomeController> logger, IHomeService homeService)
         {
             _logger = logger;
-            _unitOfWork = unitOfWork;
-            _productService = productService;
+            _homeService = homeService;
         }
 
         public IActionResult Index(string? searchString)
         {
-            IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "CategoryNav,Categories.Category");
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                productList = productList.Where(p => p.ProductName.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
-                                                     p.CategoryNav.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
-                                                     p.Categories.Any(c => c.Category.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)));                                                     
-            }
-
+            var products = _homeService.GetProducts(searchString);
             ViewData["CurrentFilter"] = searchString;
-           
-            var truncateProductName = productList.Select(c => new Product
-            {
-                Id = c.Id,
-                ProductName = _productService.TruncateText(c.ProductName, 15),
-                CategoryNav = new Category { Name = _productService.TruncateText(c.CategoryNav.Name, 15) },
-                Price = c.Price,
-                Description = c.Description,
-                ImageUrl = c.ImageUrl,
-                Categories = c.Categories
-            });
-
-            return View(truncateProductName);
+            return View(products);
         }
         public IActionResult Details(int? id)
         {
-            Product product = _unitOfWork.Product.Get(u => u.Id == id, includeProperties: "CategoryNav");
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var product = _homeService.GetProductDetails(id.Value);
+            if (product == null)
+            {
+                return NotFound();
+            }
             return View(product);
         }
         public IActionResult Privacy()
