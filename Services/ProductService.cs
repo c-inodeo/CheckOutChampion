@@ -31,7 +31,7 @@ namespace CheckOutChampion.Services
 
         public List<Product> GetAllProducts()
         {
-            return _unitOfWork.Product.GetAll(includeProperties: "CategoryNav").ToList();
+            return _unitOfWork.Product.GetAll(includeProperties: "CategoryNav,Categories.Category").ToList();
         }
 
         public IEnumerable<SelectListItem> GetCategoryList()
@@ -46,17 +46,18 @@ namespace CheckOutChampion.Services
         public void UpsertProduct(ProductVM productVM, IFormFile? file)
         {
             string wwwRootPath = _webHostEnvironment.WebRootPath;
-            if (file != null) 
-            { 
+            var product = productVM.Product;
+
+            if (file != null)
+            {
                 string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                 string productImagePath = Path.Combine(wwwRootPath, @"images\product");
 
-                if (!string.IsNullOrEmpty(productVM.Product.ImageUrl)) 
+                if (!string.IsNullOrEmpty(product.ImageUrl))
                 {
-                    var oldImagePath = Path.Combine(wwwRootPath, productVM.Product.ImageUrl.TrimStart('\\'));
-
-                    if (System.IO.File.Exists(oldImagePath)) 
-                    { 
+                    var oldImagePath = Path.Combine(wwwRootPath, product.ImageUrl.TrimStart('\\'));
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
                         System.IO.File.Delete(oldImagePath);
                     }
                 }
@@ -65,15 +66,27 @@ namespace CheckOutChampion.Services
                 {
                     file.CopyTo(fileStream);
                 }
-                productVM.Product.ImageUrl = @"\images\product\" + filename;
+                product.ImageUrl = @"\images\product\" + filename;
             }
-            if (productVM.Product.Id == 0)
+
+            if (product.Id == 0)
             {
-                _unitOfWork.Product.Add(productVM.Product);
+                _unitOfWork.Product.Add(product);
             }
             else
             {
-                _unitOfWork.Product.Update(productVM.Product);
+                _unitOfWork.Product.Update(product);
+            }
+
+            var existingCategories = _unitOfWork.ProductCategory.GetAll(pc => pc.ProductId == product.Id).ToList();
+            foreach (var category in existingCategories)
+            {
+                _unitOfWork.ProductCategory.Remove(category);
+            }
+
+            foreach (var categoryId in productVM.SelectedCategoryIds)
+            {
+                _unitOfWork.ProductCategory.Add(new ProductCategory { ProductId = product.Id, CategoryId = categoryId });
             }
             _unitOfWork.Save();
         }

@@ -27,10 +27,12 @@ namespace CheckOutChampionWeb.Areas.Admin.Controllers
         }
         public IActionResult Upsert(int? id)
         {
-            ProductVM productVM = new()
+            var product = id == null ? new Product() : _productService.GetProductById(id.Value);
+            var productVM = new ProductVM
             {
+                Product = product,
                 CategoryList = _productService.GetCategoryList(),
-                Product = id == null ? new Product() : _productService.GetProductById(id.Value)
+                SelectedCategoryIds = product.Categories.Select(c => c.CategoryId).ToList()  // Load the selected category IDs
             };
             return View(productVM);
         }
@@ -51,7 +53,16 @@ namespace CheckOutChampionWeb.Areas.Admin.Controllers
         public IActionResult GetAll()
         {
             List<Product> products = _productService.GetAllProducts();
-            return Json(new { data = products });
+            var result = products.Select(p => new
+            {
+                p.Id,
+                p.ProductName,
+                p.Description,
+                p.Price,
+                Categories = p.Categories.Select(pc => pc.Category.Name).ToList(),
+                p.ImageUrl
+            }).ToList();
+            return Json(new { data = result });
         }
         public IActionResult Delete(int? id)
         {

@@ -14,12 +14,14 @@ namespace CheckOutChampion.DataAccess.Repository
         public ICategoryRepository Category { get; private set; }
         public IProductRepository Product { get; private set; }
         public ICartRepository Cart { get; private set; }
+        public IProductCategoryRepository ProductCategory { get; private set; }
         public UnitOfWork(ApplicationDbContext context) 
         { 
             _context = context;
             Category = new CategoryRepository(_context);
             Product = new ProductRepository(_context);
             Cart = new CartRepository(_context);
+            ProductCategory = new ProductCategoryRepository(_context);
         }
 
         public void Save()

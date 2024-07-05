@@ -14,5 +14,7 @@ namespace CheckOutChampion.Models
         [DisplayName("Display Order")]
         [Range(1,100)]
         public int DisplayOrder { get; set; }
+        public ICollection<ProductCategory> Products { get; set; } = new List<ProductCategory>();
+
     }
 }

@@ -28,5 +28,7 @@ namespace CheckOutChampion.Models
         public Category CategoryNav { get; set; }
         [ValidateNever]
         public string ImageUrl { get; set; }
+        public ICollection<ProductCategory> Categories { get; set; } = new List<ProductCategory>();
+
     }
 }

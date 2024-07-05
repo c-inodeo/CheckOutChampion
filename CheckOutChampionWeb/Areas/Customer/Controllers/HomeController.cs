@@ -21,16 +21,17 @@ namespace CheckOutChampionWeb.Areas.Customer.Controllers
 
         public IActionResult Index(string? searchString)
         {
-            IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "CategoryNav");
+            IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "CategoryNav,Categories.Category");
 
             if (!String.IsNullOrEmpty(searchString))
             {
                 productList = productList.Where(p => p.ProductName.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
-                                                     p.CategoryNav.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase));
+                                                     p.CategoryNav.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+                                                     p.Categories.Any(c => c.Category.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)));                                                     
             }
 
             ViewData["CurrentFilter"] = searchString;
-
+           
             var truncateProductName = productList.Select(c => new Product
             {
                 Id = c.Id,
@@ -38,7 +39,8 @@ namespace CheckOutChampionWeb.Areas.Customer.Controllers
                 CategoryNav = new Category { Name = _productService.TruncateText(c.CategoryNav.Name, 15) },
                 Price = c.Price,
                 Description = c.Description,
-                ImageUrl = c.ImageUrl
+                ImageUrl = c.ImageUrl,
+                Categories = c.Categories
             });
 
             return View(truncateProductName);

@@ -13,7 +13,13 @@ function loadDataTable() {
             { data: "productName", "width": "15%" },
             { data: "description", "width": "25%" },
             { data: "price", "width": "5%" },
-            { data: "categoryNav.name", "width": "15%" },
+            {
+                data: "categories",
+                render: function (data) {
+                    return data.join(", ");;
+                },
+                "width": "15%"
+            },
             {
                 data: "id",
                 "render": function (data) {

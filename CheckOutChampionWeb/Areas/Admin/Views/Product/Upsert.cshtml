@@ -36,11 +36,11 @@
                             <label asp-for="Product.ImageUrl" class="ms-2 text-warning"></label>
                         </div>
                         <div class="form-floating py-2 col-12">
-                            <select asp-for="Product.CategoryId" asp-items="@Model.CategoryList" class="form-select border-0 shadow">
-                                <option disabled selected>--Select category--</option>
+                            <select style="height:150px" asp-for="SelectedCategoryIds" asp-items="Model.CategoryList" class="form-select border-0 shadow" multiple="multiple">
+                                <option disabled>--Select categories--</option>
                             </select>
-                            <label asp-for="Product.CategoryId" class="ms-2 text-warning"></label>
-                            <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+                            <label asp-for="SelectedCategoryIds" class="ms-2 text-warning"></label>
+                            <span asp-validation-for="SelectedCategoryIds" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="row pt-2">

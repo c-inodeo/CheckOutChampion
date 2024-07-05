@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.20.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CheckOutChampion.DataAccess\CheckOutChampion.DataAccess.csproj" />
     <ProjectReference Include="..\CheckOutChampion.Models\CheckOutChampion.Models.csproj" />
   </ItemGroup>
