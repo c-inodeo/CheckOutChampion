@@ -78,6 +78,8 @@ namespace CheckOutChampion.Services
                     throw new InvalidOperationException($"Category ID {categoryId} does not exist in the database.");
                 }
             }
+            
+            //Create Product
             if (product.Id == 0)
             {
                 if (string.IsNullOrEmpty(product.ProductName))
@@ -94,28 +96,30 @@ namespace CheckOutChampion.Services
                 }
 
             }
+            //Update Product
             else
             {
                 _unitOfWork.Product.Update(product);
                 _unitOfWork.Save();
 
-            }
-            var existingCategories = _unitOfWork.ProductCategory.GetAll(pc => pc.ProductId == product.Id).ToList();
-            foreach (var category in existingCategories)
-            {
-                _unitOfWork.ProductCategory.Remove(category);
-            }
-
-            foreach (var categoryId in productVM.SelectedCategoryIds)
-            {
-                var categoryExists = _unitOfWork.Category.Get(c => c.Id == categoryId);
-                if (categoryExists == null)
+                var existingCategories = _unitOfWork.ProductCategory.GetAll(pc => pc.ProductId == product.Id).ToList();
+                foreach (var category in existingCategories)
                 {
-                    throw new InvalidOperationException($"Category ID {categoryId} does not exist in the database.");
+                    _unitOfWork.ProductCategory.Remove(category);
                 }
 
-                _unitOfWork.ProductCategory.Add(new ProductCategory { ProductId = product.Id, CategoryId = categoryId });
+                foreach (var categoryId in productVM.SelectedCategoryIds)
+                {
+                    var categoryExists = _unitOfWork.Category.Get(c => c.Id == categoryId);
+                    if (categoryExists == null)
+                    {
+                        throw new InvalidOperationException($"Category ID {categoryId} does not exist in the database.");
+                    }
+
+                    _unitOfWork.ProductCategory.Add(new ProductCategory { ProductId = product.Id, CategoryId = categoryId });
+                }
             }
+            
             _unitOfWork.Save();
         }
 
