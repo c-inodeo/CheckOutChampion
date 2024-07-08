@@ -46,6 +46,8 @@ namespace CheckOutChampionWeb.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
             productVM.CategoryList = _productService.GetCategoryList();
+            productVM.SelectedCategoryIds = productVM.Product.Categories.Select(c => c.CategoryId).ToList();
+
             return View(productVM);
         }
         #region API CALLS

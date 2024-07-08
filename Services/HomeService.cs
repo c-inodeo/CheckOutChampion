@@ -22,11 +22,10 @@ namespace CheckOutChampion.Services
 
         public IEnumerable<Product> GetProducts(string? searchString)
         {
-            var productList = _unitOfWork.Product.GetAll(includeProperties: "CategoryNav,Categories.Category");
+            var productList = _unitOfWork.Product.GetAll(includeProperties: "Categories.Category");
             if (!string.IsNullOrEmpty(searchString))
             {
                 productList = productList.Where(p => p.ProductName.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
-                                                     p.CategoryNav.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
                                                      p.Categories.Any(c => c.Category.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)));
             }
 
@@ -34,16 +33,19 @@ namespace CheckOutChampion.Services
             {
                 Id = p.Id,
                 ProductName = _productService.TruncateText(p.ProductName, 15),
-                CategoryNav = new Category { Name = _productService.TruncateText(p.CategoryNav.Name, 15) },
                 Price = p.Price,
                 Description = p.Description,
                 ImageUrl = p.ImageUrl,
-                Categories = p.Categories
+                Categories = p.Categories.Select(pc => new ProductCategory
+                {
+                    Category = new Category { Name = _productService.TruncateText(pc.Category.Name, 15) }
+                }).ToList()
+
             });
         }
         public Product GetProductDetails(int id)
         {
-            return _unitOfWork.Product.Get(p => p.Id == id, includeProperties: "CategoryNav,Categories.Category");
+            return _unitOfWork.Product.Get(p => p.Id == id, includeProperties: "Categories.Category");
         }
         public string TruncateText(string input, int length)
         {

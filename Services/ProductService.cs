@@ -5,6 +5,7 @@ using CheckOutChampion.Services.Interface;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace CheckOutChampion.Services
 
         public List<Product> GetAllProducts()
         {
-            return _unitOfWork.Product.GetAll(includeProperties: "CategoryNav,Categories.Category").ToList();
+            return _unitOfWork.Product.GetAll(includeProperties: "Categories.Category").ToList();
         }
 
         public IEnumerable<SelectListItem> GetCategoryList()
@@ -48,6 +49,7 @@ namespace CheckOutChampion.Services
             string wwwRootPath = _webHostEnvironment.WebRootPath;
             var product = productVM.Product;
 
+            // Handle image upload
             if (file != null)
             {
                 string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
@@ -68,16 +70,36 @@ namespace CheckOutChampion.Services
                 }
                 product.ImageUrl = @"\images\product\" + filename;
             }
-
+            foreach (var categoryId in productVM.SelectedCategoryIds)
+            {
+                var categoryExists = _unitOfWork.Category.Get(c => c.Id == categoryId);
+                if (categoryExists == null)
+                {
+                    throw new InvalidOperationException($"Category ID {categoryId} does not exist in the database.");
+                }
+            }
             if (product.Id == 0)
             {
+                if (string.IsNullOrEmpty(product.ProductName))
+                {
+                    throw new InvalidOperationException("Product Name is required.");
+                }
+
                 _unitOfWork.Product.Add(product);
+                _unitOfWork.Save();  
+
+                foreach (var categoryId in productVM.SelectedCategoryIds)
+                {
+                    _unitOfWork.ProductCategory.Add(new ProductCategory { ProductId = product.Id, CategoryId = categoryId });
+                }
+
             }
             else
             {
                 _unitOfWork.Product.Update(product);
-            }
+                _unitOfWork.Save();
 
+            }
             var existingCategories = _unitOfWork.ProductCategory.GetAll(pc => pc.ProductId == product.Id).ToList();
             foreach (var category in existingCategories)
             {
@@ -86,10 +108,17 @@ namespace CheckOutChampion.Services
 
             foreach (var categoryId in productVM.SelectedCategoryIds)
             {
+                var categoryExists = _unitOfWork.Category.Get(c => c.Id == categoryId);
+                if (categoryExists == null)
+                {
+                    throw new InvalidOperationException($"Category ID {categoryId} does not exist in the database.");
+                }
+
                 _unitOfWork.ProductCategory.Add(new ProductCategory { ProductId = product.Id, CategoryId = categoryId });
             }
             _unitOfWork.Save();
         }
+
         public void DeleteProduct(int id)
         {
             var productToBeDeleted = _unitOfWork.Product.Get(u => u.Id == id);

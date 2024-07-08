@@ -8,6 +8,7 @@ using CheckOutChampion.DataAccess.Repository.IRepository;
 using CheckOutChampion.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using CheckOutChampion.Models;
 
 namespace CheckOutChampion.DataAccess.Repository
 {
@@ -19,8 +20,17 @@ namespace CheckOutChampion.DataAccess.Repository
         {
             _context = context;
             this.dbSet = _context.Set<T>();
-            _context.Products.Include(u => u.CategoryNav).Include(u => u.CategoryId);
-            _context.CartItems.Include(u => u.Product).Include(u => u.ProductId);
+            if (typeof(T) == typeof(Product))
+            {
+                _context.Products
+                    .Include(p => p.Categories)  
+                    .ThenInclude(pc => pc.Category);  
+            }
+            else if (typeof(T) == typeof(Cart))
+            {
+                _context.CartItems
+                    .Include(ci => ci.Product); 
+            }
         }
         public void Add(T entity)
         {

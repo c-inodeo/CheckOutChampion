@@ -41,8 +41,7 @@ namespace CheckOutChampion.DataAccess.Data
                     ProductName = "Car Wax",
                     Description = "High-performance car wax for a long-lasting shine.",
                     Price = 19.99,
-                    CategoryId = 1,
-                    ImageUrl = ""
+                    ImageUrl = "",
                 },
                 new Product
                 {
@@ -50,7 +49,6 @@ namespace CheckOutChampion.DataAccess.Data
                     ProductName = "Facial Cleanser",
                     Description = "Gentle facial cleanser for all skin types.",
                     Price = 12.49,
-                    CategoryId = 2,
                     ImageUrl = ""
                 },
                 new Product
@@ -59,7 +57,6 @@ namespace CheckOutChampion.DataAccess.Data
                     ProductName = "Mystery Novel",
                     Description = "A gripping mystery novel that will keep you on the edge of your seat.",
                     Price = 8.99,
-                    CategoryId = 3,
                     ImageUrl = ""
                 },
                 new Product
@@ -68,7 +65,6 @@ namespace CheckOutChampion.DataAccess.Data
                     ProductName = "Men's T-Shirt",
                     Description = "Comfortable cotton T-shirt available in various colors.",
                     Price = 15.00,
-                    CategoryId = 4,
                     ImageUrl = ""
                 },
                 new Product
@@ -77,7 +73,6 @@ namespace CheckOutChampion.DataAccess.Data
                     ProductName = "Smartphone",
                     Description = "Latest model with cutting-edge features.",
                     Price = 699.99,
-                    CategoryId = 5,
                     ImageUrl = ""
                 },
                 new Product
@@ -86,7 +81,6 @@ namespace CheckOutChampion.DataAccess.Data
                     ProductName = "Vitamins",
                     Description = "Daily multivitamins to boost your health.",
                     Price = 25.50,
-                    CategoryId = 6,
                     ImageUrl = ""
                 },
                 new Product
@@ -95,7 +89,6 @@ namespace CheckOutChampion.DataAccess.Data
                     ProductName = "Garden Tools Set",
                     Description = "Complete set of tools for your gardening needs.",
                     Price = 45.00,
-                    CategoryId = 7,
                     ImageUrl = ""
                 },
                 new Product
@@ -104,7 +97,6 @@ namespace CheckOutChampion.DataAccess.Data
                     ProductName = "Pet Bed",
                     Description = "Comfortable and durable pet bed for your furry friends.",
                     Price = 35.00,
-                    CategoryId = 8,
                     ImageUrl = ""
                 },
                 new Product
@@ -113,7 +105,6 @@ namespace CheckOutChampion.DataAccess.Data
                     ProductName = "Camping Tent",
                     Description = "Spacious tent for outdoor adventures.",
                     Price = 120.00,
-                    CategoryId = 9,
                     ImageUrl = ""
                 },
                 new Product
@@ -122,7 +113,6 @@ namespace CheckOutChampion.DataAccess.Data
                     ProductName = "Board Game",
                     Description = "Fun and engaging board game for family and friends.",
                     Price = 29.99,
-                    CategoryId = 10,
                     ImageUrl = ""
                 });
             modelBuilder.Entity<ProductCategory>()
@@ -132,13 +122,13 @@ namespace CheckOutChampion.DataAccess.Data
                 .HasOne(pc => pc.Product)
                 .WithMany(pc => pc.Categories)
                 .HasForeignKey(pc => pc.ProductId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<ProductCategory>()
                 .HasOne(pc => pc.Category)
                 .WithMany(pc => pc.Products)
                 .HasForeignKey(pc => pc.CategoryId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

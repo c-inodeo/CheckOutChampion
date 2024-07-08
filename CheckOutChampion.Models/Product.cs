@@ -22,10 +22,10 @@ namespace CheckOutChampion.Models
         public string? Description { get; set; }
         [Required]
         public double Price { get; set; }
-        public int CategoryId { get; set; }
-        [ForeignKey("CategoryId")]
-        [ValidateNever]
-        public Category CategoryNav { get; set; }
+        //public int CategoryId { get; set; }
+        //[ForeignKey("CategoryId")]
+        //[ValidateNever]
+        //public Category CategoryNav { get; set; }
         [ValidateNever]
         public string ImageUrl { get; set; }
         public ICollection<ProductCategory> Categories { get; set; } = new List<ProductCategory>();

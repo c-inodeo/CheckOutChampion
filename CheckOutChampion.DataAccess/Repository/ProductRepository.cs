@@ -23,6 +23,7 @@ namespace CheckOutChampion.DataAccess.Repository
             var objFromDb = _context.Products.FirstOrDefault(u => u.Id == obj.Id);
             if (objFromDb != null)
             {
+                objFromDb.Categories = obj.Categories;
                 objFromDb.ProductName = obj.ProductName;
                 objFromDb.Description = obj.Description;
                 objFromDb.Price = obj.Price;
