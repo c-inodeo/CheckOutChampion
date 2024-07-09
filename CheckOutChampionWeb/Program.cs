@@ -43,6 +43,7 @@ builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();    
 builder.Services.AddScoped<IProductService, ProductService>();    
 builder.Services.AddScoped<IHomeService, HomeService>();    
+builder.Services.AddScoped<IAzureBlobStorageService, AzureBlobStorageService>();    
 
 var app = builder.Build();
 

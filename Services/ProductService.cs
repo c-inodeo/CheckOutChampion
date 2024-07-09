@@ -5,6 +5,7 @@ using CheckOutChampion.Services.Interface;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
@@ -18,11 +19,19 @@ namespace CheckOutChampion.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IAzureBlobStorageService _azureBlobStorageService;
+        private readonly ILogger<ProductService> _logger;
 
-        public ProductService(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
+
+        public ProductService(IUnitOfWork unitOfWork, 
+            IWebHostEnvironment webHostEnvironment,
+            IAzureBlobStorageService azureBlobStorageService,
+            ILogger<ProductService> logger)
         {
-          _unitOfWork = unitOfWork;
-          _webHostEnvironment = webHostEnvironment;
+            _unitOfWork = unitOfWork;
+            _webHostEnvironment = webHostEnvironment;
+            _azureBlobStorageService = azureBlobStorageService;
+            _logger = logger;
         }
 
         public Product GetProductById(int id)
@@ -44,32 +53,45 @@ namespace CheckOutChampion.Services
             });
         }
 
-        public void UpsertProduct(ProductVM productVM, IFormFile? file)
+        public async Task UpsertProduct(ProductVM productVM, IFormFile? file)
         {
-            string wwwRootPath = _webHostEnvironment.WebRootPath;
             var product = productVM.Product;
 
             // Handle image upload
             if (file != null)
             {
                 string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                string productImagePath = Path.Combine(wwwRootPath, @"images\product");
 
                 if (!string.IsNullOrEmpty(product.ImageUrl))
                 {
-                    var oldImagePath = Path.Combine(wwwRootPath, product.ImageUrl.TrimStart('\\'));
-                    if (System.IO.File.Exists(oldImagePath))
+                    await _azureBlobStorageService.DeleteFileAsync(product.ImageUrl);
+                }
+                try
+                {
+                    using (var memoryStream = new MemoryStream())
                     {
-                        System.IO.File.Delete(oldImagePath);
+                        file.CopyTo(memoryStream);
+                        memoryStream.Position = 0;
+
+                        try
+                        {
+                            product.ImageUrl = await _azureBlobStorageService.UploadFileAsync(memoryStream, filename);
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogError(ex, "An error occurred while uploading the file.");
+                            throw;
+                        }
                     }
                 }
-
-                using (var fileStream = new FileStream(Path.Combine(productImagePath, filename), FileMode.Create))
+                catch (Exception ex)
                 {
-                    file.CopyTo(fileStream);
+                    _logger.LogError(ex, "An error occurred while handling the file upload.");
+                    throw;
                 }
-                product.ImageUrl = @"\images\product\" + filename;
             }
+
+
             foreach (var categoryId in productVM.SelectedCategoryIds)
             {
                 var categoryExists = _unitOfWork.Category.Get(c => c.Id == categoryId);
@@ -78,8 +100,8 @@ namespace CheckOutChampion.Services
                     throw new InvalidOperationException($"Category ID {categoryId} does not exist in the database.");
                 }
             }
-            
-            //Create Product
+
+            // Create Product
             if (product.Id == 0)
             {
                 if (string.IsNullOrEmpty(product.ProductName))
@@ -88,7 +110,7 @@ namespace CheckOutChampion.Services
                 }
 
                 _unitOfWork.Product.Add(product);
-                _unitOfWork.Save();  
+                _unitOfWork.Save();
 
                 foreach (var categoryId in productVM.SelectedCategoryIds)
                 {
@@ -96,7 +118,7 @@ namespace CheckOutChampion.Services
                 }
 
             }
-            //Update Product
+            // Update Product
             else
             {
                 _unitOfWork.Product.Update(product);
@@ -119,19 +141,18 @@ namespace CheckOutChampion.Services
                     _unitOfWork.ProductCategory.Add(new ProductCategory { ProductId = product.Id, CategoryId = categoryId });
                 }
             }
-            
+
             _unitOfWork.Save();
         }
 
-        public void DeleteProduct(int id)
+        public async Task DeleteProduct(int id)
         {
             var productToBeDeleted = _unitOfWork.Product.Get(u => u.Id == id);
             if (productToBeDeleted != null)
             {
-                var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, productToBeDeleted.ImageUrl.TrimStart('\\'));
-                if (System.IO.File.Exists(oldImagePath))
+                if (!string.IsNullOrEmpty(productToBeDeleted.ImageUrl))
                 {
-                    System.IO.File.Delete(oldImagePath);
+                    await _azureBlobStorageService.DeleteFileAsync(productToBeDeleted.ImageUrl);
                 }
 
                 _unitOfWork.Product.Remove(productToBeDeleted);
@@ -147,5 +168,6 @@ namespace CheckOutChampion.Services
             }
             return input.Substring(0, length) + "...";
         }
+
     }
 }

@@ -37,11 +37,11 @@ namespace CheckOutChampionWeb.Areas.Admin.Controllers
             return View(productVM);
         }
         [HttpPost]
-        public IActionResult Upsert(ProductVM productVM, IFormFile? file)
+        public async Task<IActionResult> UpsertAsync(ProductVM productVM, IFormFile file)
         {
             if (ModelState.IsValid)
             {
-                _productService.UpsertProduct(productVM, file);
+                await _productService.UpsertProduct(productVM, file);
                 TempData["success"] = "Product saved successfully!";
                 return RedirectToAction("Index");
             }

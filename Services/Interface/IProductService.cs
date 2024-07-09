@@ -14,8 +14,8 @@ namespace CheckOutChampion.Services.Interface
     {
         List<Product> GetAllProducts();
         Product GetProductById(int id);
-        public void UpsertProduct(ProductVM productVM, IFormFile? file);
-        public void DeleteProduct(int id);
+        Task UpsertProduct(ProductVM productVM, IFormFile? file);
+        Task DeleteProduct(int id);
         IEnumerable<SelectListItem> GetCategoryList();
         string TruncateText(string input, int length);
     }
