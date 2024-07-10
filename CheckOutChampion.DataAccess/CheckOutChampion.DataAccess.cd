@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CheckOutChampion.DataAccess.Data.ApplicationDbContext" Collapsed="true">
+    <Position X="18.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAAABAAAAAAEAAAEAAAAAAgAAAAAAQ=</HashCode>
+      <FileName>Data\ApplicationDbContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CheckOutChampion.DataAccess.Migrations.AddCategoryToDb" Collapsed="true">
+    <Position X="16.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\20240620104105_AddCategoryToDb.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CheckOutChampion.DataAccess.Migrations.SeedCategoryTable" Collapsed="true">
+    <Position X="18.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\20240620105150_SeedCategoryTable.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CheckOutChampion.DataAccess.Migrations.addProductsDataToDatabase" Collapsed="true">
+    <Position X="16.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\20240624081436_addProductsDataToDatabase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CheckOutChampion.DataAccess.Migrations.addForeignKeyRelationCategoryProduct" Collapsed="true">
+    <Position X="18.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\20240624092422_addForeignKeyRelationCategoryProduct.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CheckOutChampion.DataAccess.Migrations.addImageUrlToProduct" Collapsed="true">
+    <Position X="14.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\20240624092704_addImageUrlToProduct.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CheckOutChampion.DataAccess.Migrations.addIdentityTables" Collapsed="true">
+    <Position X="20" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\20240626024852_addIdentityTables.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CheckOutChampion.DataAccess.Migrations.ExtendIdentityUser" Collapsed="true">
+    <Position X="14.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\20240626031318_ExtendIdentityUser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CheckOutChampion.DataAccess.Migrations.AddCartToDatabase" Collapsed="true">
+    <Position X="14.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\20240626082037_AddCartToDatabase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CheckOutChampion.DataAccess.Migrations.ManyToManyProductCategory" Collapsed="true">
+    <Position X="16.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\20240705030638_ManyToManyProductCategory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CheckOutChampion.DataAccess.Migrations.updateProductDb" Collapsed="true">
+    <Position X="14.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\20240708034458_updateProductDb.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CheckOutChampion.DataAccess.Migrations.ApplicationDbContextModelSnapshot" Collapsed="true">
+    <Position X="20" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Migrations\ApplicationDbContextModelSnapshot.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CheckOutChampion.DataAccess.Repository.CartRepository" Collapsed="true">
+    <Position X="10" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAgAAAAAAACA=</HashCode>
+      <FileName>Repository\CartRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CheckOutChampion.DataAccess.Repository.CategoryRepository" Collapsed="true">
+    <Position X="12.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repository\CategoryRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CheckOutChampion.DataAccess.Repository.ProductCategoryRepository" Collapsed="true">
+    <Position X="5.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Repository\ProductCategoryRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CheckOutChampion.DataAccess.Repository.ProductRepository" Collapsed="true">
+    <Position X="7.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repository\ProductRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CheckOutChampion.DataAccess.Repository.Repository&lt;T&gt;" Collapsed="true">
+    <Position X="8.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAABABAAAAABAAAAAAAAAAACgAAAIAAAAA=</HashCode>
+      <FileName>Repository\Repository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CheckOutChampion.DataAccess.Repository.UnitOfWork" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="20" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAMAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAGAA=</HashCode>
+      <FileName>Repository\UnitOfWork.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="CheckOutChampion.DataAccess.Repository.IRepository.ICartRepository" Collapsed="true">
+    <Position X="7.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAACA=</HashCode>
+      <FileName>Repository\IRepository\ICartRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CheckOutChampion.DataAccess.Repository.IRepository.ICategoryRepository" Collapsed="true">
+    <Position X="10" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repository\IRepository\ICategoryRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CheckOutChampion.DataAccess.Repository.IRepository.IProductCategoryRepository" Collapsed="true">
+    <Position X="12.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Repository\IRepository\IProductCategoryRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CheckOutChampion.DataAccess.Repository.IRepository.IProductRepository" Collapsed="true">
+    <Position X="5.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repository\IRepository\IProductRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CheckOutChampion.DataAccess.Repository.IRepository.IRepository&lt;T&gt;" Collapsed="true">
+    <Position X="8.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAABAAAAABAAAAAAAAAAAAgAAAIAAAAA=</HashCode>
+      <FileName>Repository\IRepository\IRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CheckOutChampion.DataAccess.Repository.IRepository.IUnitOfWork" Collapsed="true">
+    <Position X="14.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAA=</HashCode>
+      <FileName>Repository\IRepository\IUnitOfWork.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CheckOutChampion.Models.ViewModels.ProductVM">
+    <Position X="3.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>ViewModels\ProductVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CheckOutChampion.Models.ApplicationUser">
+    <Position X="3.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIIAAAAAQAAAAAAAAAAAAABAAAABA=</HashCode>
+      <FileName>ApplicationUser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CheckOutChampion.Models.Cart">
+    <Position X="5.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAADAAAAAAAAAAAAAAAAAAgAAAAAAAAAAQAAgAAACAA=</HashCode>
+      <FileName>Cart.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CheckOutChampion.Models.Category">
+    <Position X="7" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACQAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Category.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CheckOutChampion.Models.ErrorViewModel">
+    <Position X="3.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ErrorViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CheckOutChampion.Models.Product">
+    <Position X="5.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACQAAAAQAgAAAAAAAAAAAAAAAAEAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Product.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CheckOutChampion.Models.ProductCategory">
+    <Position X="7" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAACAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>ProductCategory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
