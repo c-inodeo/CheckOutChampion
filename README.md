@@ -14,7 +14,8 @@ What it has:
       Customers can add products throught their shopping cart. It includes "My Cart" page so that customers can also check what's in their cart.
       Customers can also perform CRUD operations.
 
-  # Technology used
-  - .NET 8 Core
-  - Azurite - an upgraded version for Azure Blob Storage used to store images in a blob
-  - SSMS for storing data
+# Technology used
+- .NET 8 Core
+- Azurite - an upgraded version for Azure Blob Storage used to store images in a blob
+- SSMS for storing data
+- GitHub for Repository
