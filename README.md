@@ -19,3 +19,21 @@ What it has:
 - Azurite - an upgraded version for Azure Blob Storage used to store images in a blob
 - SSMS for storing data
 - GitHub for Repository
+
+# Set-up
+- Clone the Repository
+- Install Nuget Packages
+      - Azure.Storage.Blobs
+      - Microsoft.AspNetCore.Identity.EntityFramework
+      - Microsoft.AspNetCore.Identity.UI
+      - Microsoft.AspNetCore.Session
+      - Microsoft.EntityFrameworkCore
+      - Microsoft.EntityFrameworkCore.Sqlite
+      - Microsoft.EntityFrameworkCore.SqlServer
+      - Microsoft.EntityFrameworkCore.SqlServer
+      - Microsoft.EntityFrameworkCore.Tools
+- Install Azure Blob Emulator/Azurite
+- To check Blob Images: Install Microsoft Azure Storage Explorer
+- Set-up Azurite (https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=visual-studio%2Cblob-storage)
+      - Change your appsettings.json and add BlobStorageConnection 
+     
