@@ -8,9 +8,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace CheckOutChampionWeb.Areas.Admin.Controllers
+namespace CheckOutChampionWeb.Controllers
 {
-    [Area("Admin")]
     [Authorize(Roles = StaticData.Role_Admin)]
     public class ProductController : Controller
     {

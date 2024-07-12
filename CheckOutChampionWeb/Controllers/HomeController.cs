@@ -4,9 +4,8 @@ using CheckOutChampion.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace CheckOutChampionWeb.Areas.Customer.Controllers
+namespace CheckOutChampionWeb.Controllers
 {
-    [Area("Customer")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

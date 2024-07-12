@@ -6,9 +6,8 @@ using CheckOutChampion.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CheckOutChampionWeb.Areas.Admin.Controllers
+namespace CheckOutChampionWeb.Controllers
 {
-    [Area("Admin")]
     [Authorize(Roles = StaticData.Role_Admin)]
     public class CategoryController : Controller
     {

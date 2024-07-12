@@ -2,9 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace CheckOutChampionWeb.Areas.Customer.Controllers
+namespace CheckOutChampionWeb.Controllers
 {
-    [Area("Customer")]
     public class CartController : Controller
     {
         private readonly ICartService _cartService;
@@ -41,7 +40,7 @@ namespace CheckOutChampionWeb.Areas.Customer.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Account", new { area = "Identity" });
+                return RedirectToPage("/Account/Login", new { area = "Identity" });
             }
         }
         public IActionResult RemoveToCart(int cartId)
