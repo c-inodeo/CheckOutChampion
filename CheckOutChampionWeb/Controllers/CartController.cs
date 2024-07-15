@@ -1,4 +1,6 @@
-﻿using CheckOutChampion.Services.Interface;
+﻿using CheckOutChampion.Models;
+using CheckOutChampion.Models.DTO;
+using CheckOutChampion.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -24,13 +26,17 @@ namespace CheckOutChampionWeb.Controllers
             return View(cartItems);
         }
         [HttpPost]
-        public IActionResult AddToCart(int productId, int quantity, bool isIncrement)
+        public IActionResult AddToCart(CartItemDto cartItemDto)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
+            var cartItem = new Cart
+            { 
+                ProductId = cartItemDto.ProductId,
+                Quantity = cartItemDto.Quantity
+            };
             if (!string.IsNullOrEmpty(userId))
             {
-                _cartService.AddOrUpdateCartItem(userId, productId, quantity, isIncrement);
+                _cartService.AddOrUpdateCartItem(userId, cartItemDto);
                 var cartItems = _cartService.GetCartItems(userId);
                 _cartService.SaveCartToSession(userId, cartItems, HttpContext.Session);
                 _logger.LogInformation("Cart items saved to session for user {userId} : {CartItems}", userId, cartItems);
