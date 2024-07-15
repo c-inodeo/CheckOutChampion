@@ -1,12 +1,9 @@
-﻿using CheckOutChampion.DataAccess.Data;
-using CheckOutChampion.DataAccess.Repository.IRepository;
-using CheckOutChampion.Models;
+﻿using CheckOutChampion.Models;
 using CheckOutChampion.Models.ViewModels;
 using CheckOutChampion.Services.Interface;
 using CheckOutChampion.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CheckOutChampionWeb.Controllers
 {
@@ -63,7 +60,7 @@ namespace CheckOutChampionWeb.Controllers
                 Categories = p.Categories.Select(pc => pc.Category.Name).ToList(),
                 p.ImageUrl
             }).ToList();
-            return Json(new { data = result });
+            return Json(new { data = result }); 
         }
         public IActionResult Delete(int? id)
         {

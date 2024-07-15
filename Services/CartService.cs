@@ -1,11 +1,7 @@
 ﻿using CheckOutChampion.Models;
 using CheckOutChampion.Services.Interface;
 using CheckOutChampion.DataAccess.Repository.IRepository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using System.Text.Json;
 using Newtonsoft.Json;
@@ -72,12 +68,12 @@ namespace CheckOutChampion.Services
         }
         public void SaveCartToSession(string userId, List<Cart> cartItems, ISession session)
         {
-            session.SetString($"Cart_{userId}", JsonSerializer.Serialize(cartItems));
+            session.SetString($"Cart_{userId}", JsonSerializer.Serialize(cartItems)); //CHECK THIS
         }
         public List<Cart> LoadCartFromSession(string userId, ISession session)
         {
             var value = session.GetString(userId);
-            return value == null ? default(List<Cart>) : JsonConvert.DeserializeObject<List<Cart>>(value);
+            return value == null ? default(List<Cart>) : JsonSerializer.Deserialize<List<Cart>>(value); 
         }
 
     }
