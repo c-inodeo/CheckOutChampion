@@ -62,9 +62,9 @@ namespace CheckOutChampionWeb.Controllers
             }).ToList();
             return Json(new { data = result }); 
         }
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            _productService.DeleteProduct(id.Value);
+            await _productService.DeleteProduct(id.Value);
             return Json(new { success = true, message = "Delete Successful!" });
         }
         #endregion
