@@ -18,15 +18,16 @@ namespace CheckOutChampion.Services
         }
         public async Task<List<Category>> GetCategories()
         {
-            return _unitOfWork.Category.GetAll().ToList();
+            var getCategories = await _unitOfWork.Category.GetAll();
+            return getCategories.ToList();
         }
         public async Task<Category> GetCategoryById(int id)
         {
-            return _unitOfWork.Category.Get(c => c.Id == id);
+            return await _unitOfWork.Category.Get(c => c.Id == id);
         }
         public async Task AddCategory(Category obj)
         {
-            _unitOfWork.Category.Add(obj);
+            await _unitOfWork.Category.Add(obj);
             _unitOfWork.Save();
         }
         public async Task UpdateCategory(Category obj)
@@ -36,10 +37,10 @@ namespace CheckOutChampion.Services
         }
         public async Task DeleteCategory(int id)
         {
-            var category = _unitOfWork.Category.Get(c => c.Id == id);
+            var category = await _unitOfWork.Category.Get(c => c.Id == id);
             if (category != null)
             {
-                _unitOfWork.Category.Remove(category);
+                await _unitOfWork.Category.Remove(category);
                 _unitOfWork.Save();
             }
         }

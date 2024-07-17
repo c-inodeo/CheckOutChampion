@@ -10,7 +10,7 @@ namespace CheckOutChampion.Services.Interface
     public interface IHomeService
     {
         Task <IEnumerable<Product>> GetProducts(string? searchString);
-        Product GetProductDetails(int id);
+        Task <Product> GetProductDetails(int id);
         string TruncateText(string input, int length);
     }
 }

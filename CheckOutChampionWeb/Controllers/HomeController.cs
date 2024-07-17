@@ -22,14 +22,14 @@ namespace CheckOutChampionWeb.Controllers
             ViewData["CurrentFilter"] = searchString;
             return View(products);
         }
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var product = _homeService.GetProductDetails(id.Value);
+            var product = await _homeService.GetProductDetails(id.Value);
             if (product == null)
             {
                 return NotFound();

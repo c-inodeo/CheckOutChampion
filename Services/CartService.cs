@@ -20,7 +20,7 @@ namespace CheckOutChampion.Services
         public async Task AddOrUpdateCartItem(string userId, CartItemDto cartItemDto)
         {
             
-            var cartItem = _unitOfWork.Cart.Get(c => c.UserId == userId && c.ProductId == cartItemDto.ProductId, includeProperties: "Product");
+            var cartItem = await _unitOfWork.Cart.Get(c => c.UserId == userId && c.ProductId == cartItemDto.ProductId, includeProperties: "Product");
 
             if (cartItem == null)
             {
@@ -28,7 +28,7 @@ namespace CheckOutChampion.Services
                 {
                     UserId = userId,
                     ProductId = cartItemDto.ProductId,
-                    Product = _unitOfWork.Product.Get(c => c.Id == cartItemDto.ProductId),
+                    Product = await _unitOfWork.Product.Get(c => c.Id == cartItemDto.ProductId),
                     Quantity = cartItemDto.Quantity,
                     DateAdded = DateTime.Now
                 };
@@ -62,10 +62,10 @@ namespace CheckOutChampion.Services
 
         public async Task RemoveCartItem(int cartId)
         {
-            var itemToBeDeleted = _unitOfWork.Cart.Get(c => c.CartId == cartId);
+            var itemToBeDeleted = await _unitOfWork.Cart.Get(c => c.CartId == cartId);
             if (itemToBeDeleted != null) 
             { 
-                _unitOfWork.Cart.Remove(itemToBeDeleted);
+                await _unitOfWork.Cart.Remove(itemToBeDeleted);
                 _unitOfWork.Save();
             }
         }

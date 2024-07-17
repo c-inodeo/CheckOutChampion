@@ -36,21 +36,24 @@ namespace CheckOutChampion.Services
 
         public async Task<Product> GetProductById(int id)
         {
-            return  _unitOfWork.Product.Get(c => c.Id == id);    
+            return await _unitOfWork.Product.Get(c => c.Id == id);    
         }
 
         public async Task<List<Product>> GetAllProducts()
         {
-            return _unitOfWork.Product.GetAll(includeProperties: "Categories.Category").ToList();
+            var allProducts = await _unitOfWork.Product.GetAll(includeProperties: "Categories.Category");
+            return allProducts.ToList();
         }
 
         public async Task<IEnumerable<SelectListItem>> GetCategoryList()
         {
-            return _unitOfWork.Category.GetAll().Select( c => new SelectListItem
-            { 
+            var categoryList = await _unitOfWork.Category.GetAll();
+            var selectListItems = categoryList.Select(c => new SelectListItem
+            {
                 Text = c.Name,
                 Value = c.Id.ToString()
             });
+            return selectListItems;
         }
 
         public async Task UpsertProduct(ProductVM productVM, IFormFile? file)
@@ -94,7 +97,7 @@ namespace CheckOutChampion.Services
 
             foreach (var categoryId in productVM.SelectedCategoryIds)
             {
-                var categoryExists = _unitOfWork.Category.Get(c => c.Id == categoryId);
+                var categoryExists = await _unitOfWork.Category.Get(c => c.Id == categoryId);
                 if (categoryExists == null)
                 {
                     throw new InvalidOperationException($"Category ID {categoryId} does not exist in the database.");
@@ -109,12 +112,12 @@ namespace CheckOutChampion.Services
                     throw new InvalidOperationException("Product Name is required.");
                 }
 
-                _unitOfWork.Product.Add(product);
+                await _unitOfWork.Product.Add(product);
                 _unitOfWork.Save();
 
                 foreach (var categoryId in productVM.SelectedCategoryIds)
                 {
-                    _unitOfWork.ProductCategory.Add(new ProductCategory { ProductId = product.Id, CategoryId = categoryId });
+                    await _unitOfWork.ProductCategory.Add(new ProductCategory { ProductId = product.Id, CategoryId = categoryId });
                 }
 
             }
@@ -127,18 +130,18 @@ namespace CheckOutChampion.Services
                 var existingCategories = await _unitOfWork.ProductCategory.GetAll(pc => pc.ProductId == product.Id);
                 foreach (var category in existingCategories.ToList())
                 {
-                    _unitOfWork.ProductCategory.Remove(category);
+                    await _unitOfWork.ProductCategory.Remove(category);
                 }
 
                 foreach (var categoryId in productVM.SelectedCategoryIds)
                 {
-                    var categoryExists = _unitOfWork.Category.Get(c => c.Id == categoryId);
+                    var categoryExists = await _unitOfWork.Category.Get(c => c.Id == categoryId);
                     if (categoryExists == null)
                     {
                         throw new InvalidOperationException($"Category ID {categoryId} does not exist in the database.");
                     }
 
-                    _unitOfWork.ProductCategory.Add(new ProductCategory { ProductId = product.Id, CategoryId = categoryId });
+                    await _unitOfWork.ProductCategory.Add(new ProductCategory { ProductId = product.Id, CategoryId = categoryId });
                 }
             }
 
@@ -147,7 +150,7 @@ namespace CheckOutChampion.Services
 
         public async Task DeleteProduct(int id)
         {
-            var productToBeDeleted = _unitOfWork.Product.Get(u => u.Id == id);
+            var productToBeDeleted = await _unitOfWork.Product.Get(u => u.Id == id);
             if (productToBeDeleted != null)
             {
                 if (!string.IsNullOrEmpty(productToBeDeleted.ImageUrl))
@@ -155,7 +158,7 @@ namespace CheckOutChampion.Services
                     await _azureBlobStorageService.DeleteFileAsync(productToBeDeleted.ImageUrl);
                 }
 
-                _unitOfWork.Product.Remove(productToBeDeleted);
+                await _unitOfWork.Product.Remove(productToBeDeleted);
                 _unitOfWork.Save();
             }
         }

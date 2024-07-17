@@ -22,7 +22,7 @@ namespace CheckOutChampion.Services
 
         public async Task<IEnumerable<Product>> GetProducts(string? searchString)
         {
-            var productList =  _unitOfWork.Product.GetAll(includeProperties: "Categories.Category");
+            var productList = await _unitOfWork.Product.GetAll(includeProperties: "Categories.Category");
 
             if (!string.IsNullOrEmpty(searchString))
             {
@@ -46,9 +46,10 @@ namespace CheckOutChampion.Services
             return await Task.WhenAll(productListTasks);
         }
 
-        public Product GetProductDetails(int id)
+        public async Task<Product> GetProductDetails(int id)
         {
-            return _unitOfWork.Product.Get(p => p.Id == id, includeProperties: "Categories.Category");
+            var getProductDetails = await _unitOfWork.Product.Get(p => p.Id == id, includeProperties: "Categories.Category");
+            return getProductDetails;
         }
         public string TruncateText(string input, int length)
         {
