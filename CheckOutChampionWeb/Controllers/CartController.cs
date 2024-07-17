@@ -17,16 +17,16 @@ namespace CheckOutChampionWeb.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var cartItems = _cartService.LoadCartFromSession(userId, HttpContext.Session) ?? _cartService.GetCartItems(userId);
+            var cartItems = await _cartService.LoadCartFromSession(userId, HttpContext.Session) ?? await _cartService.GetCartItems(userId);
             _logger.LogInformation("Cart items loaded from session for user {userId} : {CartItems}", userId, cartItems);
-            ViewBag.TotalPrice = _cartService.GetTotalPrice(userId);
+            ViewBag.TotalPrice = await _cartService.GetTotalPrice(userId);
             return View(cartItems);
         }
         [HttpPost]
-        public IActionResult AddToCart(CartItemDto cartItemDto)
+        public async Task<IActionResult> AddToCart(CartItemDto cartItemDto)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var cartItem = new Cart
@@ -36,12 +36,12 @@ namespace CheckOutChampionWeb.Controllers
             };
             if (!string.IsNullOrEmpty(userId))
             {
-                _cartService.AddOrUpdateCartItem(userId, cartItemDto);
-                var cartItems = _cartService.GetCartItems(userId);
-                _cartService.SaveCartToSession(userId, cartItems, HttpContext.Session);
+                await _cartService.AddOrUpdateCartItem(userId, cartItemDto);
+                var cartItems = await _cartService.GetCartItems(userId);
+                await _cartService.SaveCartToSession(userId, cartItems, HttpContext.Session);
                 _logger.LogInformation("Cart items saved to session for user {userId} : {CartItems}", userId, cartItems);
                 TempData["success"] = "Updated cart!";
-                ViewBag.TotalPrice = _cartService.GetTotalPrice(userId);
+                ViewBag.TotalPrice = await _cartService.GetTotalPrice(userId);
                 return View("Index", cartItems);
             }
             else
@@ -49,15 +49,15 @@ namespace CheckOutChampionWeb.Controllers
                 return RedirectToPage("/Account/Login", new { area = "Identity" });
             }
         }
-        public IActionResult RemoveToCart(int cartId)
+        public async Task<IActionResult> RemoveToCart(int cartId)
         {
-            _cartService.RemoveCartItem(cartId);
+            await _cartService.RemoveCartItem(cartId);
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             TempData["success"] = "Item deleted successfully!";
-            var cartItems = _cartService.GetCartItems(userId);
-            _cartService.SaveCartToSession(userId, cartItems, HttpContext.Session);
+            var cartItems = await _cartService.GetCartItems(userId);
+            await _cartService.SaveCartToSession(userId, cartItems, HttpContext.Session);
             _logger.LogInformation("Cart items removed and updated in sessionfor user {userId} : {CartItems}", userId, cartItems);
-            ViewBag.TotalPrice = _cartService.GetTotalPrice(userId);
+            ViewBag.TotalPrice = await _cartService.GetTotalPrice(userId);
             return View("Index", cartItems);
 
         }

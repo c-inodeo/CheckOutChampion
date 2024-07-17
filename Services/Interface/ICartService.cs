@@ -11,11 +11,11 @@ namespace CheckOutChampion.Services.Interface
 {
     public interface ICartService
     {
-        List<Cart> GetCartItems(string userId);
-        void AddOrUpdateCartItem(string userId,CartItemDto cartItemDto);
-        void RemoveCartItem(int cartId);
-        double GetTotalPrice(string userId);
-        void SaveCartToSession(string userId, List<Cart> cartItems, ISession session);
-        List<Cart> LoadCartFromSession(string userId, ISession session);
+        Task<List<Cart>> GetCartItems(string userId);
+        Task AddOrUpdateCartItem(string userId,CartItemDto cartItemDto);
+        Task RemoveCartItem(int cartId);
+        Task<double> GetTotalPrice(string userId);
+        Task SaveCartToSession(string userId, List<Cart> cartItems, ISession session);
+        Task <List<Cart>> LoadCartFromSession(string userId, ISession session);
     }
 }

@@ -17,7 +17,7 @@ namespace CheckOutChampion.Services
         {
            _unitOfWork = unitOfWork;
         }
-        public void AddOrUpdateCartItem(string userId, CartItemDto cartItemDto)
+        public async Task AddOrUpdateCartItem(string userId, CartItemDto cartItemDto)
         {
             
             var cartItem = _unitOfWork.Cart.Get(c => c.UserId == userId && c.ProductId == cartItemDto.ProductId, includeProperties: "Product");
@@ -32,7 +32,7 @@ namespace CheckOutChampion.Services
                     Quantity = cartItemDto.Quantity,
                     DateAdded = DateTime.Now
                 };
-                _unitOfWork.Cart.AddToCart(cartItem);
+                await _unitOfWork.Cart.AddToCart(cartItem);
             }
             else
             {
@@ -48,18 +48,18 @@ namespace CheckOutChampion.Services
             _unitOfWork.Save();
         }
 
-        public List<Cart> GetCartItems(string userId)
+        public async Task<List<Cart>> GetCartItems(string userId)
         {
             return _unitOfWork.Cart.GetAll(c => c.UserId == userId, includeProperties: "Product").ToList();
         }
 
-        public double GetTotalPrice(string userId)
+        public async Task<double> GetTotalPrice(string userId)
         {
             var cartItems = _unitOfWork.Cart.GetAll(c => c.UserId == userId, includeProperties: "Product").ToList();
             return cartItems.Sum(item => item.Quantity * item.Product.Price);
         }
 
-        public void RemoveCartItem(int cartId)
+        public async Task RemoveCartItem(int cartId)
         {
             var itemToBeDeleted = _unitOfWork.Cart.Get(c => c.CartId == cartId);
             if (itemToBeDeleted != null) 
@@ -68,14 +68,14 @@ namespace CheckOutChampion.Services
                 _unitOfWork.Save();
             }
         }
-        public void SaveCartToSession(string userId, List<Cart> cartItems, ISession session)
+        public async Task SaveCartToSession(string userId, List<Cart> cartItems, ISession session)
         {
             session.SetString($"Cart_{userId}", JsonSerializer.Serialize(cartItems)); //CHECK THIS
         }
-        public List<Cart> LoadCartFromSession(string userId, ISession session)
+        public async Task<List<Cart>> LoadCartFromSession(string userId, ISession session)
         {
             var value = session.GetString(userId);
-            return value == null ? default(List<Cart>) : JsonSerializer.Deserialize<List<Cart>>(value); 
+            return value == null ? default(List<Cart>) : JsonSerializer.Deserialize<List<Cart>>(value);
         }
 
     }

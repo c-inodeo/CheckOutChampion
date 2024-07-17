@@ -38,7 +38,7 @@ namespace CheckOutChampion.DataAccess.Repository
             return query.ToList();
         }
 
-        public void AddToCart(Cart cart)
+        public async Task AddToCart(Cart cart)
         {
             var existingCartItem = _context.CartItems
                 .FirstOrDefault(c => c.UserId == cart.UserId && c.ProductId == cart.ProductId);
@@ -56,7 +56,7 @@ namespace CheckOutChampion.DataAccess.Repository
             _context.SaveChanges();
         }
 
-        public void Update(Cart cartItem)
+        public async Task Update(Cart cartItem)
         {
             var objFromDb = _context.CartItems.FirstOrDefault(u => u.CartId == cartItem.CartId);
             if (objFromDb != null)
