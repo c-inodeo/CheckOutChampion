@@ -50,7 +50,7 @@ namespace CheckOutChampion.DataAccess.Repository
             }
             else
             {
-                _context.CartItems.Add(cart);
+                await _context.CartItems.AddAsync(cart);
             }
 
             _context.SaveChanges();
@@ -58,7 +58,7 @@ namespace CheckOutChampion.DataAccess.Repository
 
         public async Task Update(Cart cartItem)
         {
-            var objFromDb = _context.CartItems.FirstOrDefault(u => u.CartId == cartItem.CartId);
+            var objFromDb = await _context.CartItems.FirstOrDefaultAsync(u => u.CartId == cartItem.CartId);
             if (objFromDb != null)
             {
                 objFromDb.Quantity = cartItem.Quantity;

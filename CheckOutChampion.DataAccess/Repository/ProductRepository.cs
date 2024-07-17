@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using CheckOutChampion.DataAccess.Data;
 using CheckOutChampion.DataAccess.Repository.IRepository;
 using CheckOutChampion.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CheckOutChampion.DataAccess.Repository
 {
@@ -20,7 +21,7 @@ namespace CheckOutChampion.DataAccess.Repository
 
         public async Task Update(Product obj)
         {
-            var objFromDb = _context.Products.FirstOrDefault(u => u.Id == obj.Id);
+            var objFromDb = await _context.Products.FirstOrDefaultAsync(u => u.Id == obj.Id);
             if (objFromDb != null)
             {
                 objFromDb.Categories = obj.Categories;

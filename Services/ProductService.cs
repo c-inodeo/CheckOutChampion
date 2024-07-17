@@ -170,7 +170,7 @@ namespace CheckOutChampion.Services
                 return input;
             }
             await Task.Yield();
-            return input.Substring(0, length) + "...";
+            return input.Substring(0, length) + "..."; 
         }
 
     }

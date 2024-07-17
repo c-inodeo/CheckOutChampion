@@ -11,6 +11,5 @@ namespace CheckOutChampion.Services.Interface
     {
         Task <IEnumerable<Product>> GetProducts(string? searchString);
         Task <Product> GetProductDetails(int id);
-        string TruncateText(string input, int length);
     }
 }

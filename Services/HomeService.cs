@@ -51,13 +51,5 @@ namespace CheckOutChampion.Services
             var getProductDetails = await _unitOfWork.Product.Get(p => p.Id == id, includeProperties: "Categories.Category");
             return getProductDetails;
         }
-        public string TruncateText(string input, int length)
-        {
-            if (string.IsNullOrEmpty(input) || input.Length <= length) 
-            {
-                return input;
-            }
-            return input.Substring(0, length) + "...";
-        }
     }
 }
