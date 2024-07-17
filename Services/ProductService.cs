@@ -71,7 +71,7 @@ namespace CheckOutChampion.Services
                 }
                 try
                 {
-                    using (var memoryStream = new MemoryStream())
+                    await using (var memoryStream = new MemoryStream())
                     {
                         file.CopyTo(memoryStream);
                         memoryStream.Position = 0;
