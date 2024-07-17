@@ -16,17 +16,17 @@ namespace CheckOutChampionWeb.Controllers
         {
             _categoryService = categoryService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List<Category> categories = _categoryService.GetCategories();
+            List<Category> categories = await _categoryService.GetCategories();
             return View(categories);
         }
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Category obj)
+        public async Task<IActionResult> Create(Category obj)
         {
             if (obj.Name == obj.DisplayOrder.ToString())
             {
@@ -34,19 +34,19 @@ namespace CheckOutChampionWeb.Controllers
             }
             if (ModelState.IsValid)
             {
-                _categoryService.AddCategory(obj);
+                await _categoryService.AddCategory(obj);
                 TempData["success"] = "Category created successfully!";
                 return RedirectToAction("Index");
             }
             return View();
         }
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || id == 0)
             {
                 return NotFound();
             }
-            Category? categoryFromDb = _categoryService.GetCategoryById(id.Value);
+            Category? categoryFromDb = await _categoryService.GetCategoryById(id.Value);
 
             if (categoryFromDb == null)
             {
@@ -55,7 +55,7 @@ namespace CheckOutChampionWeb.Controllers
             return View(categoryFromDb);
         }
         [HttpPost]
-        public IActionResult Edit(Category obj)
+        public async Task<IActionResult> Edit(Category obj)
         {
             if (obj.Name == obj.DisplayOrder.ToString())
             {
@@ -63,19 +63,19 @@ namespace CheckOutChampionWeb.Controllers
             }
             if (ModelState.IsValid)
             {
-                _categoryService.UpdateCategory(obj);
+                await _categoryService.UpdateCategory(obj);
                 TempData["success"] = "Category edited successfully!";
                 return RedirectToAction("Index");
             }
             return View();
         }
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || id == 0)
             {
                 return NotFound();
             }
-            Category? categoryFromDb = _categoryService.GetCategoryById(id.Value);
+            Category? categoryFromDb = await _categoryService.GetCategoryById(id.Value);
 
             if (categoryFromDb == null)
             {
@@ -84,13 +84,13 @@ namespace CheckOutChampionWeb.Controllers
             return View(categoryFromDb);
         }
         [HttpPost, ActionName("Delete")]
-        public IActionResult DeletePOST(int? id)
+        public async Task<IActionResult> DeletePOST(int? id)
         {
             if (id == null || id == 0)
             {
                 return NotFound();
             }
-            _categoryService.DeleteCategory(id.Value);
+            await _categoryService.DeleteCategory(id.Value);
             TempData["success"] = "Category deleted successfully!";
             return RedirectToAction("Index");
         }

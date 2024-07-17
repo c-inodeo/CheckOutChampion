@@ -9,10 +9,10 @@ namespace CheckOutChampion.Services.Interface
 {
     public interface ICategoryService
     {
-        List<Category> GetCategories();
-        Category GetCategoryById(int id);
-        public void AddCategory(Category obj);
-        public void UpdateCategory(Category obj);
-        public void DeleteCategory(int id);
+        Task <List<Category>> GetCategories();
+        Task <Category> GetCategoryById(int id);
+        public Task AddCategory(Category obj);
+        public Task UpdateCategory(Category obj);
+        public Task DeleteCategory(int id);
     }
 }

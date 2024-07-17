@@ -18,7 +18,7 @@ namespace CheckOutChampion.DataAccess.Repository
             _context = context;
         }
 
-        public void Update(Category obj)
+        public async Task Update(Category obj)
         {
             _context.Categories.Update(obj);
         }

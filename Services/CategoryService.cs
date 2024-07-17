@@ -16,25 +16,25 @@ namespace CheckOutChampion.Services
         {
             _unitOfWork = unitOfWork;
         }
-        public List<Category> GetCategories()
+        public async Task<List<Category>> GetCategories()
         {
             return _unitOfWork.Category.GetAll().ToList();
         }
-        public Category GetCategoryById(int id)
+        public async Task<Category> GetCategoryById(int id)
         {
             return _unitOfWork.Category.Get(c => c.Id == id);
         }
-        public void AddCategory(Category obj)
+        public async Task AddCategory(Category obj)
         {
             _unitOfWork.Category.Add(obj);
             _unitOfWork.Save();
         }
-        public void UpdateCategory(Category obj)
+        public async Task UpdateCategory(Category obj)
         {
-            _unitOfWork.Category.Update(obj);
+            await _unitOfWork.Category.Update(obj);
             _unitOfWork.Save();
         }
-        public void DeleteCategory(int id)
+        public async Task DeleteCategory(int id)
         {
             var category = _unitOfWork.Category.Get(c => c.Id == id);
             if (category != null)
