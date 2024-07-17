@@ -20,7 +20,7 @@ namespace CheckOutChampion.DataAccess.Repository
             _context = context;
         }
 
-        public IEnumerable<ProductCategory> GetAll(Expression<Func<ProductCategory, bool>>? filter = null)
+        public async Task<IEnumerable<ProductCategory>> GetAll(Expression<Func<ProductCategory, bool>>? filter = null)
         {
             IQueryable<ProductCategory> query = _context.ProductCategories
             .Include(pc => pc.Product)
@@ -31,7 +31,7 @@ namespace CheckOutChampion.DataAccess.Repository
                 query = query.Where(filter);
             }
 
-            return query.ToList();
+            return await query.ToListAsync();
         }
     }
 }

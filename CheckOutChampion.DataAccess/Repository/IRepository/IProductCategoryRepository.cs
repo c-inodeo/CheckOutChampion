@@ -7,6 +7,6 @@ namespace CheckOutChampion.DataAccess.Repository.IRepository
 {
     public interface IProductCategoryRepository : IRepository<ProductCategory>
     {
-        IEnumerable<ProductCategory> GetAll(Expression<Func<ProductCategory, bool>>? filter = null);
+        Task <IEnumerable<ProductCategory>> GetAll(Expression<Func<ProductCategory, bool>>? filter = null);
     }
 }

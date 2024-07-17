@@ -124,8 +124,8 @@ namespace CheckOutChampion.Services
                 await _unitOfWork.Product.Update(product);
                 _unitOfWork.Save();
 
-                var existingCategories = _unitOfWork.ProductCategory.GetAll(pc => pc.ProductId == product.Id).ToList();
-                foreach (var category in existingCategories)
+                var existingCategories = await _unitOfWork.ProductCategory.GetAll(pc => pc.ProductId == product.Id);
+                foreach (var category in existingCategories.ToList())
                 {
                     _unitOfWork.ProductCategory.Remove(category);
                 }
