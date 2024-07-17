@@ -50,13 +50,14 @@ namespace CheckOutChampion.Services
 
         public async Task<List<Cart>> GetCartItems(string userId)
         {
-            return _unitOfWork.Cart.GetAll(c => c.UserId == userId, includeProperties: "Product").ToList();
+            var cartItems = await _unitOfWork.Cart.GetAll(c => c.UserId == userId, includeProperties: "Product");
+            return cartItems.ToList();
         }
 
         public async Task<double> GetTotalPrice(string userId)
         {
-            var cartItems = _unitOfWork.Cart.GetAll(c => c.UserId == userId, includeProperties: "Product").ToList();
-            return cartItems.Sum(item => item.Quantity * item.Product.Price);
+            var cartItems = await _unitOfWork.Cart.GetAll(c => c.UserId == userId, includeProperties: "Product");
+            return cartItems.ToList().Sum(item => item.Quantity * item.Product.Price);
         }
 
         public async Task RemoveCartItem(int cartId)

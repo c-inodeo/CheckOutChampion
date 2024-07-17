@@ -18,7 +18,7 @@ namespace CheckOutChampion.DataAccess.Repository
             _context = context;
         }
 
-        public IEnumerable<Cart> GetAll(Expression<Func<Cart, bool>>? filter = null, string? includeProperties = null)
+        public async Task<IEnumerable<Cart>> GetAll(Expression<Func<Cart, bool>>? filter = null, string? includeProperties = null)
         {
             IQueryable<Cart> query = _context.CartItems;
 
@@ -31,11 +31,11 @@ namespace CheckOutChampion.DataAccess.Repository
             {
                 foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
-                    query = query.Include(includeProperty);
+                    query =  query.Include(includeProperty);
                 }
             }
 
-            return query.ToList();
+            return await query.ToListAsync();
         }
 
         public async Task AddToCart(Cart cart)
