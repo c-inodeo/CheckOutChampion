@@ -18,7 +18,7 @@ namespace CheckOutChampion.DataAccess.Repository
             _context = context;
         }
 
-        public void Update(Product obj)
+        public async Task Update(Product obj)
         {
             var objFromDb = _context.Products.FirstOrDefault(u => u.Id == obj.Id);
             if (objFromDb != null)

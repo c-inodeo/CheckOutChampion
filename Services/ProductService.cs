@@ -121,7 +121,7 @@ namespace CheckOutChampion.Services
             // Update Product
             else
             {
-                _unitOfWork.Product.Update(product);
+                await _unitOfWork.Product.Update(product);
                 _unitOfWork.Save();
 
                 var existingCategories = _unitOfWork.ProductCategory.GetAll(pc => pc.ProductId == product.Id).ToList();
