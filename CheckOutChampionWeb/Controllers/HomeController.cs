@@ -16,9 +16,9 @@ namespace CheckOutChampionWeb.Controllers
             _homeService = homeService;
         }
 
-        public IActionResult Index(string? searchString)
+        public async Task<IActionResult> Index(string? searchString)
         {
-            var products = _homeService.GetProducts(searchString);
+            var products = await _homeService.GetProducts(searchString);
             ViewData["CurrentFilter"] = searchString;
             return View(products);
         }

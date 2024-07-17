@@ -24,7 +24,11 @@
                 </div>
                 <div class="col-12 col-lg-6 offset-lg-1">
                     <div class="col-12 col-md-6 pb-4">
-                        <span class="badge">@Model.Categories.ToString()</span>
+                        @foreach (var item in Model.Categories)
+                        {
+                            <span class="badge">@item.Category.Name.ToString()</span>
+                        }
+                       
                     </div>
                     <div class="row text-center ps-2">
                         <div class="p-1 col-3 col-lg-2 bg-white text-warning fw-bold">

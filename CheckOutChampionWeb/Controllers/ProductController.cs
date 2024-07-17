@@ -15,19 +15,19 @@ namespace CheckOutChampionWeb.Controllers
         {
             _productService = productService;
         }
-        public IActionResult Index(string? searchString)
+        public async Task<IActionResult> Index(string? searchString)
         {
-            List<Product> categories = _productService.GetAllProducts();
+            List<Product> categories = await _productService.GetAllProducts();
             ViewData["CurrentFilter"] = searchString;
             return View(categories);
         }
-        public IActionResult Upsert(int? id)
+        public async Task<IActionResult> Upsert(int? id)
         {
-            var product = id == null ? new Product() : _productService.GetProductById(id.Value);
+            var product = id == null ? new Product() : await _productService.GetProductById(id.Value);
             var productVM = new ProductVM
             {
                 Product = product,
-                CategoryList = _productService.GetCategoryList(),
+                CategoryList = await _productService.GetCategoryList(),
                 SelectedCategoryIds = product.Categories.Select(c => c.CategoryId).ToList()  // Load the selected category IDs
             };
             return View(productVM);
@@ -41,16 +41,16 @@ namespace CheckOutChampionWeb.Controllers
                 TempData["success"] = "Product saved successfully!";
                 return RedirectToAction("Index");
             }
-            productVM.CategoryList = _productService.GetCategoryList();
+            productVM.CategoryList = await _productService.GetCategoryList();
             productVM.SelectedCategoryIds = productVM.Product.Categories.Select(c => c.CategoryId).ToList();
 
             return View(productVM);
         }
         #region API CALLS
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            List<Product> products = _productService.GetAllProducts();
+            List<Product> products = await _productService.GetAllProducts();
             var result = products.Select(p => new
             {
                 p.Id,

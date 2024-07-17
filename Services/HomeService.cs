@@ -20,29 +20,32 @@ namespace CheckOutChampion.Services
             _productService = productService;
         }
 
-        public IEnumerable<Product> GetProducts(string? searchString)
+        public async Task<IEnumerable<Product>> GetProducts(string? searchString)
         {
-            var productList = _unitOfWork.Product.GetAll(includeProperties: "Categories.Category");
+            var productList =  _unitOfWork.Product.GetAll(includeProperties: "Categories.Category");
+
             if (!string.IsNullOrEmpty(searchString))
             {
                 productList = productList.Where(p => p.ProductName.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
                                                      p.Categories.Any(c => c.Category.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)));
             }
 
-            return productList.Select(p => new Product
+            var productListTasks = productList.Select(async p => new Product
             {
                 Id = p.Id,
-                ProductName = _productService.TruncateText(p.ProductName, 15),
+                ProductName = await _productService.TruncateText(p.ProductName, 15),
                 Price = p.Price,
                 Description = p.Description,
                 ImageUrl = p.ImageUrl,
-                Categories = p.Categories.Select(pc => new ProductCategory
+                Categories = await Task.WhenAll(p.Categories.Select(async pc => new ProductCategory
                 {
-                    Category = new Category { Name = _productService.TruncateText(pc.Category.Name, 15) }
-                }).ToList()
-
+                    Category = new Category { Name = await _productService.TruncateText(pc.Category.Name, 15) }
+                }))
             });
+
+            return await Task.WhenAll(productListTasks);
         }
+
         public Product GetProductDetails(int id)
         {
             return _unitOfWork.Product.Get(p => p.Id == id, includeProperties: "Categories.Category");

@@ -34,17 +34,17 @@ namespace CheckOutChampion.Services
             _logger = logger;
         }
 
-        public Product GetProductById(int id)
+        public async Task<Product> GetProductById(int id)
         {
-            return _unitOfWork.Product.Get(c => c.Id == id);    
+            return  _unitOfWork.Product.Get(c => c.Id == id);    
         }
 
-        public List<Product> GetAllProducts()
+        public async Task<List<Product>> GetAllProducts()
         {
             return _unitOfWork.Product.GetAll(includeProperties: "Categories.Category").ToList();
         }
 
-        public IEnumerable<SelectListItem> GetCategoryList()
+        public async Task<IEnumerable<SelectListItem>> GetCategoryList()
         {
             return _unitOfWork.Category.GetAll().Select( c => new SelectListItem
             { 
@@ -160,12 +160,13 @@ namespace CheckOutChampion.Services
             }
         }
 
-        public string TruncateText(string input, int length)
+        public async Task<string> TruncateText(string input, int length)
         {
             if (string.IsNullOrEmpty(input)|| input.Length <= length)
             { 
                 return input;
             }
+            await Task.Yield();
             return input.Substring(0, length) + "...";
         }
 

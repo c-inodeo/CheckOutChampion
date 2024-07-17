@@ -12,11 +12,11 @@ namespace CheckOutChampion.Services.Interface
 {
     public interface IProductService
     {
-        List<Product> GetAllProducts();
-        Product GetProductById(int id);
+        Task<List<Product>> GetAllProducts();
+        Task<Product> GetProductById(int id);
         Task UpsertProduct(ProductVM productVM, IFormFile? file);
         Task DeleteProduct(int id);
-        IEnumerable<SelectListItem> GetCategoryList();
-        string TruncateText(string input, int length);
+        Task<IEnumerable<SelectListItem>> GetCategoryList();
+        Task<string> TruncateText(string input, int length);
     }
 }
