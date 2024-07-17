@@ -28,12 +28,12 @@ namespace CheckOutChampion.Services
         public async Task AddCategory(Category obj)
         {
             await _unitOfWork.Category.Add(obj);
-            _unitOfWork.Save();
+            await _unitOfWork.Save();
         }
         public async Task UpdateCategory(Category obj)
         {
             await _unitOfWork.Category.Update(obj);
-            _unitOfWork.Save();
+            await _unitOfWork.Save();
         }
         public async Task DeleteCategory(int id)
         {
@@ -41,7 +41,7 @@ namespace CheckOutChampion.Services
             if (category != null)
             {
                 await _unitOfWork.Category.Remove(category);
-                _unitOfWork.Save();
+                await _unitOfWork.Save();
             }
         }
     }

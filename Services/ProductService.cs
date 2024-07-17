@@ -113,7 +113,7 @@ namespace CheckOutChampion.Services
                 }
 
                 await _unitOfWork.Product.Add(product);
-                _unitOfWork.Save();
+                await _unitOfWork.Save();
 
                 foreach (var categoryId in productVM.SelectedCategoryIds)
                 {
@@ -125,7 +125,7 @@ namespace CheckOutChampion.Services
             else
             {
                 await _unitOfWork.Product.Update(product);
-                _unitOfWork.Save();
+                await _unitOfWork.Save();
 
                 var existingCategories = await _unitOfWork.ProductCategory.GetAll(pc => pc.ProductId == product.Id);
                 foreach (var category in existingCategories.ToList())
@@ -145,7 +145,7 @@ namespace CheckOutChampion.Services
                 }
             }
 
-            _unitOfWork.Save();
+            await _unitOfWork.Save();
         }
 
         public async Task DeleteProduct(int id)
@@ -159,7 +159,7 @@ namespace CheckOutChampion.Services
                 }
 
                 await _unitOfWork.Product.Remove(productToBeDeleted);
-                _unitOfWork.Save();
+                await _unitOfWork.Save();
             }
         }
 

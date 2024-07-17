@@ -45,7 +45,7 @@ namespace CheckOutChampion.Services
                     cartItem.Quantity = cartItemDto.Quantity;
                 }
             }
-            _unitOfWork.Save();
+            await _unitOfWork.Save();
         }
 
         public async Task<List<Cart>> GetCartItems(string userId)
@@ -66,7 +66,7 @@ namespace CheckOutChampion.Services
             if (itemToBeDeleted != null) 
             { 
                 await _unitOfWork.Cart.Remove(itemToBeDeleted);
-                _unitOfWork.Save();
+                await _unitOfWork.Save();
             }
         }
         public async Task SaveCartToSession(string userId, List<Cart> cartItems, ISession session)

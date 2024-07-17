@@ -12,6 +12,6 @@ namespace CheckOutChampion.DataAccess.Repository.IRepository
         IProductRepository Product { get; }
         ICartRepository Cart { get; }
         IProductCategoryRepository ProductCategory { get; }
-        void Save();
+        Task Save();
     }
 }
